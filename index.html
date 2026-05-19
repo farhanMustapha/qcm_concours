@@ -372,12 +372,11 @@
 
         <!-- Image slider -->
         <div class="slimora-img-box" onclick="openSlimoraModal()" title="انقر لمعرفة التفاصيل">
-            <img id="s-img-0"
-                src="file:///C:/Users/AdMin/.gemini/antigravity/brain/cd2a6229-3560-419f-bb27-a6f60ed9b81a/media__1779186265409.png"
-                class="active" alt="Slimora face 1">
-            <img id="s-img-1"
-                src="file:///C:/Users/AdMin/.gemini/antigravity/brain/cd2a6229-3560-419f-bb27-a6f60ed9b81a/media__1779186265446.png"
-                class="inactive" alt="Slimora face 2">
+            <!-- تم تصحيح المسارات هنا لتصبح نسبية وتشتغل فـ GitHub -->
+            <img id="s-img-0" src="IMG1.png" class="active" alt="Slimora face 1"
+                onerror="this.src='https://placehold.co/220x230/f8fafb/059669?text=Slimora+1'">
+            <img id="s-img-1" src="IMG2.png" class="inactive" alt="Slimora face 2"
+                onerror="this.src='https://placehold.co/220x230/f8fafb/059669?text=Slimora+2'">
         </div>
 
         <!-- Price + dots + WhatsApp -->
@@ -389,7 +388,7 @@
             <span
                 style="font-size:17px;font-weight:800;color:#78350f;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:8px;padding:3px 14px;">💰
                 150 DH</span>
-            <a href="https://wa.me/212708216572?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%2C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20Slimora%20Naturals"
+            <a href="https://wa.me/212708216572?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8Access%2C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20Slimora%20Naturals"
                 target="_blank" rel="noopener" class="whatsapp-btn"
                 style="width:100%;justify-content:center;font-size:12px;padding:8px 10px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="white">
@@ -965,7 +964,7 @@
                     "Le cas d'une immobilisation Corporelles totalement amortie",
                     "La réponse c est vraie"
                 ],
-                answer: [0, 1], // Les réponses a et b sont correctes
+                answer: [0, 1],
                 explanation: "Les immobilisations en non-valeur (frais préliminaires) doivent être impérativement soldées dès qu'elles sont totalement amorties (réponse a). De même, toute immobilisation cédée doit sortir du bilan et être soldée (réponse b). Par contre, une immobilisation corporelle totalement amortie reste à l'actif (avec une VNA nulle) tant qu'elle est utilisée par l'entreprise (réponse c est fausse)."
             },
             {
@@ -978,7 +977,7 @@
                     "L'aptitude de l'entreprise à transformer plus ou moins rapidement ses actifs en trésorerie",
                     "La capacité de l'entreprise à régler l'ensemble des dettes"
                 ],
-                answer: [0], // La réponse a est correcte
+                answer: [0],
                 explanation: "L'exigibilité représente le délai restant avant le remboursement d'une dette. Respecter les dates d'échéance de règlement des dettes témoigne ainsi d'une bonne gestion de l'exigibilité (réponse a). Pour information, la transformation plus ou moins rapide des actifs en trésorerie désigne la liquidité (réponse b), tandis que la capacité à régler l'ensemble de ses dettes désigne la solvabilité (réponse c)."
             },
             {
@@ -991,7 +990,7 @@
                     "Les collectivités locales",
                     "Le pouvoir Public"
                 ],
-                answer: [2], // La réponse c est correcte
+                answer: [2],
                 explanation: "Dans le modèle d'analyse stratégique des '5 + 1 forces de Porter', la force additionnelle (+1) représente l'impact de l'État et du Pouvoir Public (réponse c) sur l'environnement concurrentiel (par les lois, régulations, normes, etc.)."
             },
             {
@@ -1004,7 +1003,7 @@
                     "Politique Economique structurel Technologique Economique légal",
                     "Politique Economique stratégique Technologique Economique légal"
                 ],
-                answer: [0], // La réponse a est correcte
+                answer: [0],
                 explanation: "Le modèle PESTEL classe les influences macro-environnementales en Politique, Économique, Social, Technologique, Écologique, Légal. L'option a est la seule à mentionner 'Social' pour la lettre S (les options b et c mentionnent à tort 'structurel' et 'stratégique')."
             },
             {
@@ -1018,8 +1017,8 @@
                     "Localiser les zones de performance et de non performance au sein d'une entreprise",
                     "La réponse b est vraie"
                 ],
-                answer: [2], // La réponse c est correcte
-                explanation: "La comptabilité analytique (ou de gestion) est un outil interne destiné à calculer les coûts, analyser la rentabilité des différents produits ou départements, et ainsi localiser précisément les zones de performance et de non-performance au sein de l'entreprise (réponse c). La détermination de l'assiette fiscale (a) et la force probante en justice (b) sont des rôles dévolus à la comptabilité générale (financière)."
+                answer: [2],
+                explanation: "La comptabilité analytique (ou de gestion) is un outil interne destiné à calculer les coûts, analyser la rentabilité des différents produits ou départements, et ainsi localiser précisément les zones de performance et de non-performance au sein de l'entreprise (réponse c). La détermination de l'assiette fiscale (a) et la force probante en justice (b) sont des rôles dévolus à la comptabilité générale (financière)."
             },
             {
                 id: 6,
@@ -1031,7 +1030,7 @@
                     "Au prix d’achat",
                     "Au coût de production"
                 ],
-                answer: [0], // La réponse a est correcte
+                answer: [0],
                 explanation: "Les matières premières achetées par l'entreprise entrent en stock évaluées à leur coût d'achat (qui comprend le prix d'achat plus les frais accessoires d'achat comme le transport, les assurances, etc.). Le coût de production s'applique quant à lui aux produits fabriqués par l'entreprise."
             },
             {
@@ -1044,7 +1043,7 @@
                     "Des charges non incorporables",
                     "Des charges incorporables"
                 ],
-                answer: [0], // La réponse a est correcte
+                answer: [0],
                 explanation: "Les charges supplétives sont des charges fictives prises en compte en comptabilité analytique pour des raisons d'analyse économique et de gestion, mais qui n'existent pas en comptabilité générale (ex : rémunération théorique des capitaux propres ou du travail de l'exploitant individuel)."
             },
             {
@@ -1059,7 +1058,7 @@
                     "0,19% sur un SBG plafonné",
                     "1,6% sur un SBG plafonné à 6000 dh"
                 ],
-                answer: [3], // La réponse d est correcte
+                answer: [3],
                 explanation: "La cotisation CNSS pour l'Indemnité de Perte d'Emploi (IPE) s'élève à 0,57% du Salaire Brut Global (SBG) plafonné à 6000 DH. La part patronale est de 0,38% et la part salariale est de 0,19% (réponse d)."
             },
             {
@@ -1073,8 +1072,8 @@
                     "450 000",
                     "430 000"
                 ],
-                answer: [1], // La réponse b est correcte
-                explanation: "La durée de vie est de 6 ans et 8 mois (soit 80 mois), d'où un taux d'amortissement de 12/80 = 15%. La machine étant achetée le 20-04-2020, le prorata temporis pour 2020 est de 9 mois (avril à décembre). \nCalcul : 1ère annuité = VE * Taux * prorata => 48 375 = VE * 0,15 * (9/12) => 48 375 = VE * 0,1125 => VE = 430 000 DH (réponse b)."
+                answer: [1],
+                explanation: "La durée de vie est de 6 ans et 8 mois (soit 80 mois), d'où un taux d'amortissement de 12/80 = 15%. La machine étant achetée le 20-04-2020, le prorata temporis pour 2020 is de 9 mois (avril à décembre). \nCalcul : 1ère annuité = VE * Taux * prorata => 48 375 = VE * 0,15 * (9/12) => 48 375 = VE * 0,1125 => VE = 430 000 DH (réponse b)."
             },
             {
                 id: 10,
@@ -1088,7 +1087,7 @@
                     "Le net à payer hors taxe",
                     "La réponse d est fausse"
                 ],
-                answer: [1, 3], // Les réponses b et d sont correctes
+                answer: [1, 3],
                 explanation: "La base d'imposition de la TVA est constituée par le prix net de vente hors taxe (après toutes déductions commerciales et financières) augmenté de tous les frais accessoires facturés au client (ex : transport, emballages). Cela correspond exactement au prix net de toutes réductions augmenté des frais accessoires (réponse b), ce qui équivaut au net à payer hors taxe (réponse d)."
             },
             {
@@ -1101,7 +1100,7 @@
                     "les charges non incorporables – Les charges supplétives",
                     "Les charges non courantes – les charges financières"
                 ],
-                answer: [0], // La réponse a est correcte
+                answer: [0],
                 explanation: "Pour obtenir les charges de la comptabilité analytique (CAE) à partir de celles de la comptabilité générale, on doit : ajouter les charges supplétives (qui n'existent pas en comptabilité générale) et soustraire les charges non incorporables (qui ne relèvent pas de l'exploitation courante). Formule : Charges CAE = Charges Gên. + Charges Supplétives - Charges Non Inc. (réponse a)."
             },
             {
@@ -1114,7 +1113,7 @@
                     "Une action est un titre de créance dont le revenu est un dividende tandis qu’une obligation est un titre de propriété dont le revenu est un intérêt",
                     "Une action est un titre de propriété dont le revenu est un dividende tandis qu’une obligation est un titre de créance dont le revenu est un intérêt"
                 ],
-                answer: [2], // La réponse c est correcte
+                answer: [2],
                 explanation: "Une action confère des droits de propriété sur le capital social d'une société et donne droit à des dividendes (revenu variable). Une obligation est un titre de créance représentant une fraction d'emprunt à long terme et donne droit à des intérêts fixes (réponse c)."
             },
             {
@@ -1128,7 +1127,7 @@
                     "Le résultat comptable majoré des réintégrations fiscales et minoré des déductions fiscales",
                     "La réponse c est vraie"
                 ],
-                answer: [2, 3], // Les réponses c et d sont correctes
+                answer: [2, 3],
                 explanation: "Le résultat fiscal se calcule à partir du résultat comptable en réintégrant les charges non déductibles (majorations) et en déduisant les produits non imposables (minorations). Formule : Résultat fiscal = Résultat comptable + Réintégrations - Déductions (réponse c). Par conséquent, la réponse d est vraie également."
             },
             {
@@ -1141,7 +1140,7 @@
                     "Des actions",
                     "Des obligations"
                 ],
-                answer: [0], // La réponse a est correcte
+                answer: [0],
                 explanation: "Dans le cas d'une SARL (Société à Responsabilité Limitée), les titres représentatifs du capital social détenus par les associés sont appelés des parts sociales (réponse a). Les actions concernent les sociétés par actions (SA, SAS)."
             },
             {
@@ -1154,7 +1153,7 @@
                     "Une moins-value de 6 000 Dhs",
                     "Un résultat nul"
                 ],
-                answer: [2], // La réponse c est correcte
+                answer: [2],
                 explanation: "Calcul :\n1. Valeur HT = 180 000 / 1,2 = 150 000 DH (taux de TVA standard de 20%).\n2. Taux d'amortissement annuel = 100% / 5 ans = 20%.\n3. Durée d'utilisation (du 02/01/2015 au 01/01/2019) = 4 ans.\n4. Cumul amortissements = 150 000 * 20% * 4 = 120 000 DH.\n5. Valeur Nette d'Amortissement (VNA) = 150 000 - 120 000 = 30 000 DH.\n6. Résultat de cession = Prix de cession - VNA = 30 000 - 30 000 = 0 DH (Résultat nul, réponse c)."
             },
             {
@@ -1168,7 +1167,7 @@
                     "Des pertes des exercices antérieurs reportés dans l’attente de bénéfices pour les compenser",
                     "La réponse a est fausse"
                 ],
-                answer: [2, 3], // Les réponses c et d sont correctes
+                answer: [2, 3],
                 explanation: "Un report à nouveau (RAN) débiteur représente le cumul des pertes des exercices antérieurs non encore épongées (réponse c). Le bénéfice reporté correspond quant à lui au report à nouveau créditeur (ce qui rend la proposition a fausse, d'où la réponse d est vraie également)."
             },
             {
@@ -1181,7 +1180,7 @@
                     "11 500",
                     "2950"
                 ],
-                answer: [2], // La réponse c est correcte
+                answer: [2],
                 explanation: "Calcul :\n1. Taux de réserve légale obligatoire (SA) = 5% du bénéfice net.\n2. Plafond légal = 10% du capital social = 10% * 500 000 = 50 000 DH.\n3. Cumul existant avant affectation = 47 050 DH.\n4. Dotation théorique = 5% * 230 000 = 11 500 DH.\n5. Dotation résiduelle maximale possible avant d'atteindre le plafond = 50 000 - 47 050 = 2 950 DH.\nPuisque la dotation théorique (11 500 DH) dépasse la limite nécessaire pour atteindre le plafond de 10%, la dotation est plafonnée à la dotation résiduelle, soit 2 950 DH (réponse c)."
             },
             {
@@ -1195,7 +1194,7 @@
                     "Lorsqu’elle prend des valeurs dans un intervalle",
                     "La réponse c est fausse"
                 ],
-                answer: [0, 3], // Les réponses a et d sont correctes
+                answer: [0, 3],
                 explanation: "Une variable statistique quantitative est discrète si elle prend des valeurs isolées (réponse a). En revanche, si elle prend toutes les valeurs possibles d'un intervalle, elle est dite continue (ce qui rend la proposition c fausse, d'où la réponse d est vraie également)."
             },
             {
@@ -1208,7 +1207,7 @@
                     "Sa valeur centrale et sa valeur supérieure",
                     "Sa valeur supérieure et sa valeur inférieure"
                 ],
-                answer: [2], // La réponse c est correcte
+                answer: [2],
                 explanation: "L'étendue d'une série statistique est la différence entre sa valeur maximale (valeur supérieure) et sa valeur minimale (valeur inférieure). Formule : Étendue = Max - Min (réponse c)."
             },
             {
@@ -1223,14 +1222,14 @@
                     "Le local abritant le commerce (murs)",
                     "Nom commercial"
                 ],
-                answer: [3], // La réponse d est correcte
+                answer: [3],
                 explanation: "Le fonds de commerce comprend des éléments incorporels (clientèle, nom commercial, droit au bail) et corporels (matériel, marchandises). Le local (les murs de l'immeuble) ne fait jamais partie du fonds de commerce ; il appartient au patrimoine immobilier et fait l'objet d'un bail commercial séparé (réponse d)."
             }
         ];
 
         let currentQuestions = [];
         let currentQuestionIndex = 0;
-        let selectedOptionIndices = []; // Modifié pour supporter plusieurs réponses
+        let selectedOptionIndices = [];
         let score = 0;
         let hasValidated = false;
         let questionResults = [];
@@ -1271,7 +1270,6 @@
 
             if (mode === 'marches') {
                 currentQuestions = [...MP_QUESTIONS];
-                // Update category badge color to amber for Marchés Publics
                 questionCategory.className = "bg-amber-50 text-amber-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider";
             } else {
                 currentQuestions = [...ALL_QUESTIONS];
@@ -1334,7 +1332,7 @@
                 button.disabled = hasValidated;
                 button.onclick = () => selectOption(idx);
 
-                const letter = String.fromCharCode(97 + idx); // 97 is 'a'
+                const letter = String.fromCharCode(97 + idx);
 
                 button.innerHTML = `
                     <div class="flex items-center space-x-3">
@@ -1404,7 +1402,7 @@
                 selectedOptionIndices.push(index);
             }
 
-            showQuestion(); // Re-render to show checkboxes state
+            showQuestion();
         }
 
         function skipQuestion() {
@@ -1433,10 +1431,8 @@
             hasValidated = true;
             const currentQ = currentQuestions[currentQuestionIndex];
 
-            // Check if correct (multiple choices logic)
             let isCorrect = false;
             if (Array.isArray(currentQ.answer)) {
-                // Must have exact same number of answers and all selected must be in correct answers
                 isCorrect = selectedOptionIndices.length === currentQ.answer.length &&
                     selectedOptionIndices.every(val => currentQ.answer.includes(val));
             } else {
@@ -1474,22 +1470,18 @@
                 const isSelected = selectedOptionIndices.includes(i);
 
                 if (isCorrectAnswer && isSelected) {
-                    // Correctly selected
                     card.className = "option-card w-full flex items-center justify-between p-4 rounded-xl border-2 text-left transition-all border-emerald-500 bg-emerald-50";
                     indicatorContainer.innerHTML = `<div class="w-6 h-6 rounded-md bg-emerald-500 flex items-center justify-center"><i data-lucide="check" class="w-4 h-4 text-white"></i></div>`;
                     letterBox.className = "w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center text-sm font-extrabold text-white border border-emerald-500 shrink-0 option-letter";
                 } else if (isCorrectAnswer && !isSelected) {
-                    // Missed correct answer
                     card.className = "option-card w-full flex items-center justify-between p-4 rounded-xl border-2 text-left transition-all border-emerald-500 bg-white";
                     indicatorContainer.innerHTML = `<div class="w-6 h-6 rounded-md border-2 border-emerald-500 flex items-center justify-center"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i></div>`;
                     letterBox.className = "w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-sm font-extrabold text-emerald-600 border border-emerald-200 shrink-0 option-letter";
                 } else if (!isCorrectAnswer && isSelected) {
-                    // Incorrectly selected
                     card.className = "option-card w-full flex items-center justify-between p-4 rounded-xl border-2 text-left transition-all border-red-500 bg-red-50";
                     indicatorContainer.innerHTML = `<div class="w-6 h-6 rounded-md bg-red-500 flex items-center justify-center"><i data-lucide="x" class="w-4 h-4 text-white"></i></div>`;
                     letterBox.className = "w-8 h-8 rounded-lg bg-red-500 flex items-center justify-center text-sm font-extrabold text-white border border-red-500 shrink-0 option-letter";
                 } else {
-                    // Ignored correctly
                     card.className = "option-card w-full flex items-center justify-between p-4 rounded-xl border-2 text-left transition-all border-slate-100 opacity-60";
                     indicatorContainer.innerHTML = `<div class="w-6 h-6 rounded-md border-2 border-slate-200 bg-transparent flex items-center justify-center"></div>`;
                     letterBox.className = "w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-sm font-extrabold text-slate-300 border border-slate-200 shrink-0 option-letter";

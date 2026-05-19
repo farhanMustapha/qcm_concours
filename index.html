@@ -73,7 +73,8 @@
             background: #fff;
             width: 100%;
             max-width: 340px;
-            margin: 32px auto;
+            margin: 0 auto 24px auto;
+            /* Margin optimized for top position on mobile */
             position: relative;
             z-index: 10;
         }
@@ -374,9 +375,47 @@
     </header>
 
     <!-- Main Content Area -->
-    <!-- Added responsive margins (xl:mr-[260px]) to prevent overlapping on desktop -->
     <main
         class="flex-grow max-w-5xl w-full mx-auto xl:mr-[260px] xl:ml-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+
+        <!-- ========== SLIMORA NATURALS RIGHT SIDEBAR / TOP BANNER ========== -->
+        <!-- Placed at the very top of main content to make it appear first on mobile viewports -->
+        <aside class="slimora-sidebar" id="slimoraSidebar">
+
+            <!-- Description box -->
+            <div class="slimora-desc-box">
+                🌿 <strong>Slimora Naturals</strong><br>
+                مكمل غذائي طبيعي لخسارة الوزن — يساعد على حرق الدهون، تقليل الشهية وتعزيز الطاقة 💚
+            </div>
+
+            <!-- Image slider -->
+            <div class="slimora-img-box" onclick="openSlimoraModal()" title="انقر لمعرفة التفاصيل">
+                <img id="s-img-0" src="IMG1.png" class="active" alt="Slimora face 1"
+                    onerror="this.src='https://placehold.co/220x230/f8fafb/059669?text=Slimora+1'">
+                <img id="s-img-1" src="IMG2.png" class="inactive" alt="Slimora face 2"
+                    onerror="this.src='https://placehold.co/220x230/f8fafb/059669?text=Slimora+2'">
+            </div>
+
+            <!-- Price + dots + WhatsApp -->
+            <div class="slimora-bottom">
+                <div class="slimora-dots">
+                    <div class="s-dot active" id="s-dot-0" onclick="sGoTo(0)"></div>
+                    <div class="s-dot" id="s-dot-1" onclick="sGoTo(1)"></div>
+                </div>
+                <span
+                    style="font-size:17px;font-weight:800;color:#78350f;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:8px;padding:3px 14px;">💰
+                    150 DH</span>
+                <a href="https://wa.me/212708216572?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8Access%2C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20Slimora%20Naturals"
+                    target="_blank" rel="noopener" class="whatsapp-btn"
+                    style="width:100%;justify-content:center;font-size:12px;padding:8px 10px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="white">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                    اطلب عبر واتساب
+                </a>
+            </div>
+        </aside>
 
         <!-- Écran de Bienvenue -->
         <div id="welcome-screen"
@@ -584,45 +623,6 @@
 
     </main>
 
-    <!-- ========== SLIMORA NATURALS RIGHT SIDEBAR ========== -->
-    <!-- Moved to the end of body for natural flow on mobile below the main content -->
-    <aside class="slimora-sidebar" id="slimoraSidebar">
-
-        <!-- Description box -->
-        <div class="slimora-desc-box">
-            🌿 <strong>Slimora Naturals</strong><br>
-            مكمل غذائي طبيعي لخسارة الوزن — يساعد على حرق الدهون، تقليل الشهية وتعزيز الطاقة 💚
-        </div>
-
-        <!-- Image slider -->
-        <div class="slimora-img-box" onclick="openSlimoraModal()" title="انقر لمعرفة التفاصيل">
-            <img id="s-img-0" src="IMG1.png" class="active" alt="Slimora face 1"
-                onerror="this.src='https://placehold.co/220x230/f8fafb/059669?text=Slimora+1'">
-            <img id="s-img-1" src="IMG2.png" class="inactive" alt="Slimora face 2"
-                onerror="this.src='https://placehold.co/220x230/f8fafb/059669?text=Slimora+2'">
-        </div>
-
-        <!-- Price + dots + WhatsApp -->
-        <div class="slimora-bottom">
-            <div class="slimora-dots">
-                <div class="s-dot active" id="s-dot-0" onclick="sGoTo(0)"></div>
-                <div class="s-dot" id="s-dot-1" onclick="sGoTo(1)"></div>
-            </div>
-            <span
-                style="font-size:17px;font-weight:800;color:#78350f;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:8px;padding:3px 14px;">💰
-                150 DH</span>
-            <a href="https://wa.me/212708216572?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8Access%2C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20Slimora%20Naturals"
-                target="_blank" rel="noopener" class="whatsapp-btn"
-                style="width:100%;justify-content:center;font-size:12px;padding:8px 10px;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="white">
-                    <path
-                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                </svg>
-                اطلب عبر واتساب
-            </a>
-        </div>
-    </aside>
-
     <!-- ========== SLIMORA MODAL ========== -->
     <div class="slimora-modal-overlay" id="slimoraModalOverlay" onclick="closeSlimoraModalOnBg(event)">
         <div class="slimora-modal">
@@ -674,7 +674,7 @@
                         <path
                             d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                     </svg>
-                    📩 اطلب الآن · 0708216572
+                    📩 اطلب الآن
                 </a>
             </div>
         </div>
@@ -820,7 +820,7 @@
                     "Marché au pourcentage"
                 ],
                 answer: [1],
-                explanation: "Le marché à tranches conditionnelles est un marché composé d'une tranche ferme (dont l'exécution est certaine dès la notification) et d'une ou plusieurs tranches conditionnelles (dont l'exécution est subordonnée à une décision ultérieure du maître d'ouvrage). Il permet de planifier un projet en plusieurs étapes tout en gardant la flexibilité budgétaire."
+                explanation: "Le marché à tranches conditionnelles est un marché composé d'une tranche ferme (dont l'exécution is certaine dès la notification) et d'une ou plusieurs tranches conditionnelles (dont l'exécution est subordonnée à une décision ultérieure du maître d'ouvrage). Il permet de planifier un projet en plusieurs étapes tout en gardant la flexibilité budgétaire."
             },
             {
                 id: 11,
@@ -932,7 +932,7 @@
                     "Un bon de commande pour les petites fournitures"
                 ],
                 answer: [1],
-                explanation: "L'avenant est un acte juridique qui modifie les clauses d'un marché public en cours d'exécution (augmentation ou diminution des quantités, modification technique, prolongation de délai). Il doit être conclu avant la réception des prestations, ne peut pas changer la nature du marché, et est soumis aux mêmes règles d'approbation que le marché initial."
+                explanation: "L'avenant is un acte juridique qui modifie les clauses d'un marché public en cours d'exécution (augmentation ou diminution des quantités, modification technique, prolongation de délai). Il doit être conclu avant la réception des prestations, ne peut pas changer la nature du marché, et est soumis aux mêmes règles d'approbation que le marché initial."
             },
             {
                 id: 19,
@@ -1193,7 +1193,7 @@
                     "2950"
                 ],
                 answer: [2],
-                explanation: "Calcul :\n1. Taux de réserve légale obligatoire (SA) = 5% du bénéfice net.\n2. Plafond légal = 10% du capital social = 10% * 500 000 = 50 000 DH.\n3. Cumul existant avant affectation = 47 050 DH.\n4. Dotation théorique = 5% * 230 000 = 11 500 DH.\n5. Dotation résiduelle maximale possible avant d'atteindre le plafond = 50 000 - 47 050 = 2 950 DH.\nPuisque la dotation théorique (11 500 DH) dépasse la limite nécessaire pour atteindre le plafond de 10%, la dotation est plafonnée à la dotation résiduelle, soit 2 950 DH (réponse c)."
+                explanation: "Calcul :\n1. Taux de réserve légale obligatoire (SA) = 5% du bénéfice net.\n2. Plafond légal = 10% du capital social = 10% * 500 000 = 50 000 DH.\n3. Cumul existant avant affectation = 47 050 DH.\n4. Dotation théorique = 5% * 230 000 = 11 500 DH.\n5. Dotation résiduelle maximale possible avant d'atteindre le plafond = 50 000 - 47 050 = 2 950 DH.\nPuisque la dotation théorique (11 500 DH) dépasse la limite nécessaire pour atteindre le plafond de 10%, la dotation is plafonnée à la dotation résiduelle, soit 2 950 DH (réponse c)."
             },
             {
                 id: 18,
@@ -1235,7 +1235,7 @@
                     "Nom commercial"
                 ],
                 answer: [3],
-                explanation: "Le fonds de commerce comprend des éléments incorporels (clientèle, nom commercial, droit au bail) et corporels (matériel, marchandises). Le local (les murs de l'immeuble) ne fait jamais partie du fonds de commerce ; il appartient au patrimoine immobilier et fait l'objet d'un bail commercial séparé (réponse d)."
+                explanation: "Le fonds de commerce comprend des éléments incorporels (clientèle, nom commercial, droit au bail) et corporels (matériel, marchandises). Le local (les murs de l'immeuble) ne fait jamais partie du fonds de commerce ; il appartient au patrimoine immobilier et fait l'objet d'un iail commercial séparé (réponse d)."
             }
         ];
 
@@ -1630,46 +1630,6 @@
         }
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSlimoraModal(); });
     </script>
-
-    <!-- ========== SLIMORA NATURALS RIGHT SIDEBAR ========== -->
-    <!-- Placed before body end so it flows beautifully below the quiz on mobile viewports -->
-    <aside class="slimora-sidebar" id="slimoraSidebar">
-
-        <!-- Description box -->
-        <div class="slimora-desc-box">
-            🌿 <strong>Slimora Naturals</strong><br>
-            مكمل غذائي طبيعي لخسارة الوزن — يساعد على حرق الدهون، تقليل الشهية وتعزيز الطاقة 💚
-        </div>
-
-        <!-- Image slider -->
-        <div class="slimora-img-box" onclick="openSlimoraModal()" title="انقر لمعرفة التفاصيل">
-            <img id="s-img-0" src="IMG1.png" class="active" alt="Slimora face 1"
-                onerror="this.src='https://placehold.co/220x230/f8fafb/059669?text=Slimora+1'">
-            <img id="s-img-1" src="IMG2.png" class="inactive" alt="Slimora face 2"
-                onerror="this.src='https://placehold.co/220x230/f8fafb/059669?text=Slimora+2'">
-        </div>
-
-        <!-- Price + dots + WhatsApp -->
-        <div class="slimora-bottom">
-            <div class="slimora-dots">
-                <div class="s-dot active" id="s-dot-0" onclick="sGoTo(0)"></div>
-                <div class="s-dot" id="s-dot-1" onclick="sGoTo(1)"></div>
-            </div>
-            <span
-                style="font-size:17px;font-weight:800;color:#78350f;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:8px;padding:3px 14px;">💰
-                150 DH</span>
-            <a href="https://wa.me/212708216572?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8Access%2C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20Slimora%20Naturals"
-                target="_blank" rel="noopener" class="whatsapp-btn"
-                style="width:100%;justify-content:center;font-size:12px;padding:8px 10px;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="white">
-                    <path
-                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                </svg>
-                اطلب عبر واتساب
-            </a>
-        </div>
-    </aside>
-
 </body>
 
 </html>

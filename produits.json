@@ -1,0 +1,240 @@
+{
+
+  "produits": [
+    {
+      "id": 1,
+      "question": "1- 6% du règlement en espèces des ventes dont le montant dépasse 20.000 dh.\n\n",
+      "correct_answer": {
+        "type": "non_imposable",
+        "montant": null,
+        "colonne": "",
+        "explication": null
+      }
+    },
+    {
+      "id": 2,
+      "question": "2- Dividende.\n\n",
+      "correct_answer": {
+        "type": "non_imposable",
+        "montant": null,
+        "colonne": "",
+        "explication": "-  عند الشركة الموزِّعة:  \nالشركة لي كتوزع الأرباح كتخرجهم من الربح بعد ما تكون خلصات l’impôt sur les sociétés (IS).  \n يعني الأرباح ديجا تفرضات عليهم ضريبة.\n\n-  علاش كيتقال \"غير خاضعة\":  \nفالجانب المحاسبي، الشركة لي كتحصل على dividendes من شركات أخرى، كتعاملها بحال produit financier، ولكن فـ الضريبة، ما كتعاودش تفرض عليهم IS ثاني، خصوصاً فـ إطار الشركات القابضة، لتفادي double imposition."
+      }
+    },
+    {
+      "id": 3,
+      "question": "3- vente de m/ses mais non livree 20000 dh.\n\n",
+      "correct_answer": {
+        "type": "non_imposable",
+        "montant": 20000,
+        "colonne": "reintegration",
+        "explication": "en cas de vente non encore livrée et non encore facturée, il ne faut pas la comptabiliser comme un produit tant qu'il n'y a pas d'événement générateur (livraison ou facturation)."
+      }
+    },
+    {
+      "id": 4,
+      "question": "4- cession des immobilisations.\n\n",
+      "correct_answer": {
+        "type": "non_imposable",
+        "montant": null,
+        "colonne": "",
+        "explication": null
+      }
+    },
+    {
+      "id": 5,
+      "question": "5- Intérêts nets créditeurs reçus d’une banque en rémunération d’un dépôt à terme. Montant de 100.000 DH. (80%).\n\n",
+      "correct_answer": {
+        "type": "non_imposable",
+        "montant": 25000,
+        "colonne": "reintegration",
+        "explication": "il faut calculer le brut cad 100000/0.8=125000 puis reintegrer la difference cad 125000-100000=25000 dh \n si cette operation etait enregistrer en brut on va rien faire ",
+        "comment": "ici on un probleme pour le choix de colone normalement doit prendre rentegration il faut s'assurer de ca "
+      }
+    },
+    {
+      "id": 6,
+      "question": "6- La S.A est propriétaire d’un magasin aménagé, qu’elle loue à une entreprise commerciale. Le loyer est réglé d’avance pour six mois ; le dernier règlement a été effectué le 01/09/N pour un montant de 180.000 DH.\n\n",
+      "correct_answer": {
+        "type": "non_imposable",
+        "montant": 60000,
+        "colonne": "deduction",
+        "explication": "il faut diviser le montant sur 6 pour savoir le gain mensuelle puis deduire les deux mois de N+1 car les autres mois sont attacher a l'exercice N+1 "
+      }
+    },
+    {
+      "id": 7,
+      "question": "7- La S.A s’est engagée à réaliser une étude de marché pour le compte d’un client au montant total de 170.000 DH. Le client a versé un acompte de 60.000 DH le 09/12/N, le solde sera réglé à la fin de la prestation prévue pour le 20/01/N+1.\n\n",
+      "correct_answer": {
+        "type": "non_imposable",
+        "montant": 60000,
+        "colonne": "deduction",
+        "explication": "Accomptes recu sont non imposable 60 000 dh car les avances represente une dette ,il ne constitue pas un produit imposable "
+      }
+    },
+    {
+      "id": 8,
+      "question": "8- Le stock de la S.A est constitué de biens fongibles. La durée de rotation des stocks est de 3 mois. Les achats des trois derniers mois sont de : 6.000 unités à 35 DH, 9.000 unités à 40 DH, 4.000 unités à 41 DH. L’inventaire physique au 31/12/N révèle la présence de 5.500 unités en stocks et déjà évalué à 36,50 DH.\n\n",
+      "correct_answer": {
+        "type": "non_imposable",
+        "montant": 8250,
+        "colonne": "reintegration",
+        "explication": "Methode cout moyen pondere CMUP: (6000*35)+(9000*40)/15000 = 38 dh \n5500*38=209 000 . \nMethode FIFO: 6000*35=220000 dh. \n 5500*36,5=200750 puis on calcule la difference 209000-200750=8250 a reintegrer ",
+        "comment": " https://www.youtube.com/watch?v=9QdvF1EL61U ici problement montant doit etre sur colone reinteger ce que donne erreur refaire le code "
+      }
+    },
+
+    {
+      "id": 9,
+      "question": "9- un resultat comptable avant impot deficitaire.\n\n",
+      "correct_answer": {
+        "type": "non_imposable",
+        "montant": 153700,
+        "colonne": "deduction",
+        "explication": null
+      }
+    },
+    {
+      "id": 10,
+      "question": "10- un resultat comptable avant impot deficitaire.\n\n",
+      "correct_answer": {
+        "type": "non_imposable",
+        "montant": 153700,
+        "colonne": "deduction",
+        "explication": null
+      }
+    },
+    {
+      "id": 11,
+      "question": "11- Location divers recu 8000 dh .\n\n",
+      "correct_answer": {
+        "type": "imposable",
+        "montant": 8000,
+        "colonne": "",
+        "explication": null
+      }
+    },
+    {
+      "id": 12,
+      "question": "12- Dividende des titres de participation 60000 dh .\n\n",
+      "correct_answer": {
+        "type": "non_imposable",
+        "montant": 60000,
+        "colonne": "deduction",
+        "explication": null
+      }
+    },
+    {
+      "id": 13,
+      "question": "13- Subventions recues de 260 000 dh .\n\n",
+      "correct_answer": {
+        "type": "imposable",
+        "montant": 260000,
+        "colonne": "",
+        "explication": null
+      }
+    },
+    {
+      "id": 14,
+      "question": "14- Produit de cession d'une machine industriel 120 000 dh ttc tva 20% .\n\n",
+      "correct_answer": {
+        "type": "non_imposable",
+        "montant": 20000,
+        "colonne": "deduction",
+        "explication": "Normalement les produit doit etre en HT donc il faut deduire le 20% de la  tva "
+      }
+    },
+      {
+        "id": 15,
+        "question": "15- Chiffre d’affaire (taxable au taux de 20%) : 7 980 060.\n\n",
+        "correct_answer": {
+          "type": "imposable",
+          "montant": null,
+          "colonne": "",
+          "explication": "CA soumis à la TVA au taux de 20% donc totalement imposable."
+        }
+      },
+      {
+        "id": 16,
+        "question": "16- Chiffre d’affaire (taxable au taux de 7%) : 1 190 800\n\n",
+        "correct_answer": {
+          "type": "imposable",
+          "montant": null,
+          "colonne": "",
+          "explication": "CA soumis à la TVA au taux réduit de 7%, donc imposable également."
+        }
+      },
+      {
+        "id": 17,
+        "question": "17- Chiffre d’affaire (exonéré de la TVA) : 901 000. \n\n",
+        "correct_answer": {
+          "type": "imposable",
+          "montant": null,
+          "colonne": "",
+          "explication": "Le CA est exonéré de TVA, donc on le consedere imposable."
+        }
+      },
+      {
+        "id": 18,
+        "question": "18- Produits de location d’un immeuble nu : 170 000.\n\n",
+        "correct_answer": {
+          "type": "imposable",
+          "montant": null,
+          "colonne": "",
+          "explication": null
+        }
+      },
+      {
+        "id": 19,
+        "question": "19- Redevance de location sur brevet livré à une société marocaine : 50 000.\n\n",
+        "correct_answer": {
+          "type": "imposable",
+          "montant": null,
+          "colonne": "",
+          "explication": "Redevance sur brevet constitue une prestation de service imposable : produits et accessoires."
+        }
+      },
+      {
+        "id": 20,
+        "question": "20- Subvention d’exploitation reçus : 48 000.\n\n",
+        "correct_answer": {
+          "type": "imposable",
+          "montant": null,
+          "colonne": "",
+          "explication": null
+        }
+      },
+      {
+        "id": 21,
+        "question": "21- Produits de cession des éléments d’actif : 60 000.\n\n",
+        "correct_answer": {
+          "type": "imposable",
+          "montant": null,
+          "colonne": "",
+          "explication": null
+        }
+      },
+      {
+        "id": 22,
+        "question": "22- Les intérêts nets d’un compte bloqué : 45 000.\n\n",
+        "correct_answer": {
+          "type": "non_imposable",
+          "montant": 11250,
+          "colonne": "reintegration",
+          "explication": "la partie imposable est le brute dans le cas de net on divise par 80% puis on multiplier le resultat par 20% donne 11250 dh a reintegrer"
+        }
+      },
+      {
+        "id": 23,
+        "question": "23- Escompte obtenu : 10 000.\n\n",
+        "correct_answer": {
+          "type": "imposable",
+          "montant": null,
+          "colonne": "",
+          "explication": null
+        }
+      }
+
+
+  ]
+}

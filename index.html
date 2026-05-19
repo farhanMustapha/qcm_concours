@@ -20,7 +20,7 @@
     <!-- Lucide Icons for premium modern UI -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800&display=swap');
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -84,12 +84,10 @@
             width: 100%;
             max-width: 340px;
             margin: 0 auto 24px auto;
-            /* Margin optimized for top position on mobile */
             position: relative;
             z-index: 10;
         }
 
-        /* On larger screens, the sidebar becomes fixed on the right */
         @media (min-width: 1280px) {
             .slimora-sidebar {
                 position: fixed;
@@ -170,80 +168,6 @@
             border-radius: 4px;
         }
 
-        /* ===== SLIMORA OLD BANNER (keep for legacy CSS refs) ===== */
-        .slimora-banner {
-            background: linear-gradient(135deg, #064e3b 0%, #065f46 40%, #047857 70%, #059669 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .slimora-banner::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(167, 243, 208, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .slimora-banner::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(52, 211, 153, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        /* Slider */
-        .slider-wrapper {
-            position: relative;
-            width: 220px;
-            height: 220px;
-            flex-shrink: 0;
-        }
-
-        .slider-img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 16px;
-            transition: opacity 0.7s ease-in-out;
-            cursor: pointer;
-            filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.35));
-        }
-
-        .slider-img.active {
-            opacity: 1;
-        }
-
-        .slider-img.inactive {
-            opacity: 0;
-        }
-
-        /* Dots slider */
-        .slider-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .slider-dot.active {
-            background: #fff;
-            width: 20px;
-            border-radius: 4px;
-        }
-
-        /* WhatsApp button */
         .whatsapp-btn {
             background: linear-gradient(135deg, #25d366, #128c7e);
             color: white;
@@ -266,7 +190,6 @@
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
         }
 
-        /* Price badge */
         .price-badge {
             background: linear-gradient(135deg, #fbbf24, #f59e0b);
             color: #78350f;
@@ -278,7 +201,6 @@
             box-shadow: 0 2px 10px rgba(251, 191, 36, 0.4);
         }
 
-        /* Modal */
         .slimora-modal-overlay {
             position: fixed;
             inset: 0;
@@ -346,11 +268,6 @@
             direction: rtl;
             text-align: right;
         }
-
-        /* Image hover effect */
-        .slider-wrapper:hover .slider-img.active {
-            filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.4)) brightness(1.05);
-        }
     </style>
 </head>
 
@@ -360,12 +277,12 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KS8N7ZNR" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+
     <!-- Header / Navbar -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div
-                    class="bg-blue-600 text-white p-2 rounded-xl shadow-md shadow-blue-100 flex items-center justify-center">
+                <div class="bg-blue-600 text-white p-2 rounded-xl shadow-md shadow-blue-100 flex items-center justify-center">
                     <i data-lucide="graduation-cap" class="w-6 h-6"></i>
                 </div>
                 <div>
@@ -380,8 +297,7 @@
                     <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
                     <span>Recommencer</span>
                 </button>
-                <div
-                    class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-1">
+                <div class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-1">
                     <span id="nav-score-display">Score: 0/0</span>
                 </div>
             </div>
@@ -389,42 +305,30 @@
     </header>
 
     <!-- Main Content Area -->
-    <main
-        class="flex-grow max-w-5xl w-full mx-auto xl:mr-[260px] xl:ml-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+    <main class="flex-grow max-w-5xl w-full mx-auto xl:mr-[260px] xl:ml-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
 
-        <!-- ========== SLIMORA NATURALS RIGHT SIDEBAR / TOP BANNER ========== -->
-        <!-- Placed at the very top of main content to make it appear first on mobile viewports -->
+        <!-- ========== SLIMORA NATURALS SIDEBAR ========== -->
         <aside class="slimora-sidebar" id="slimoraSidebar">
-
-            <!-- Description box -->
             <div class="slimora-desc-box">
                 🌿 <strong>Slimora Naturals</strong><br>
                 مكمل غذائي طبيعي لخسارة الوزن — يساعد على حرق الدهون، تقليل الشهية وتعزيز الطاقة 💚
             </div>
-
-            <!-- Image slider -->
             <div class="slimora-img-box" onclick="openSlimoraModal()" title="انقر لمعرفة التفاصيل">
                 <img id="s-img-0" src="IMG1.png" class="active" alt="Slimora face 1"
                     onerror="this.src='https://placehold.co/220x230/f8fafb/059669?text=Slimora+1'">
                 <img id="s-img-1" src="IMG2.png" class="inactive" alt="Slimora face 2"
                     onerror="this.src='https://placehold.co/220x230/f8fafb/059669?text=Slimora+2'">
             </div>
-
-            <!-- Price + dots + WhatsApp -->
             <div class="slimora-bottom">
                 <div class="slimora-dots">
                     <div class="s-dot active" id="s-dot-0" onclick="sGoTo(0)"></div>
                     <div class="s-dot" id="s-dot-1" onclick="sGoTo(1)"></div>
                 </div>
-                <span
-                    style="font-size:17px;font-weight:800;color:#78350f;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:8px;padding:3px 14px;">💰
-                    150 DH</span>
+                <span style="font-size:17px;font-weight:800;color:#78350f;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:8px;padding:3px 14px;">💰 150 DH</span>
                 <a href="https://wa.me/212708216572?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8Access%2C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20Slimora%20Naturals"
-                    target="_blank" rel="noopener" class="whatsapp-btn"
-                    style="width:100%;justify-content:center;font-size:12px;padding:8px 10px;">
+                    target="_blank" rel="noopener" class="whatsapp-btn" style="width:100%;justify-content:center;font-size:12px;padding:8px 10px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="white">
-                        <path
-                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                     </svg>
                     اطلب عبر واتساب
                 </a>
@@ -432,16 +336,13 @@
         </aside>
 
         <!-- Écran de Bienvenue -->
-        <div id="welcome-screen"
-            class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-sm max-w-2xl mx-auto w-full fade-in my-auto">
+        <div id="welcome-screen" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-sm max-w-2xl mx-auto w-full fade-in my-auto">
             <div class="text-center mb-8">
-                <div
-                    class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 mb-4">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 mb-4">
                     <i data-lucide="award" class="w-10 h-10"></i>
                 </div>
                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Préparation au Concours</h2>
-                <p class="text-slate-500 mt-2 text-sm sm:text-base">Évaluez vos compétences avec cette simulation
-                    interactive basée sur le sujet officiel.</p>
+                <p class="text-slate-500 mt-2 text-sm sm:text-base">Évaluez vos compétences avec cette simulation interactive basée sur le sujet officiel.</p>
             </div>
 
             <!-- WhatsApp Group Invite Banner -->
@@ -469,45 +370,48 @@
                 <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Choisissez votre test</h3>
 
                 <div class="grid grid-cols-1 gap-3">
+                    <!-- NOUVEAU: Traitement Fiscal des Charges -->
+                    <button onclick="startQuiz('charges')"
+                        class="flex items-start p-4 rounded-xl border-2 border-slate-200 hover:border-violet-600 hover:bg-violet-50/40 text-left transition-all group">
+                        <div class="p-2 bg-violet-50 rounded-lg text-violet-600 mr-4 group-hover:bg-violet-100 transition-colors">
+                            <i data-lucide="calculator" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-slate-800 block text-sm sm:text-base">Traitement fiscal des charges</span>
+                            <span class="text-xs text-slate-500 block mt-0.5">Déductibilité, Réintégrations (+) et Déductions (-). Simulation interactive avec montants.</span>
+                        </div>
+                    </button>
+
                     <button onclick="startQuiz('all')"
                         class="flex items-start p-4 rounded-xl border-2 border-slate-200 hover:border-blue-500 hover:bg-blue-50/40 text-left transition-all group">
-                        <div
-                            class="p-2 bg-blue-50 rounded-lg text-blue-600 mr-4 group-hover:bg-blue-100 transition-colors">
+                        <div class="p-2 bg-blue-50 rounded-lg text-blue-600 mr-4 group-hover:bg-blue-100 transition-colors">
                             <i data-lucide="book-open" class="w-6 h-6"></i>
                         </div>
                         <div>
-                            <span class="font-bold text-slate-800 block text-sm sm:text-base">QCM Comptabilité, Gestion
-                                & Stratégie</span>
-                            <span class="text-xs text-slate-500 block mt-0.5">60 Questions : Statistiques, Fonds de
-                                commerce, Réserve légale, TVA, Porter, PESTEL, CNSS, Cessions</span>
+                            <span class="font-bold text-slate-800 block text-sm sm:text-base">QCM Comptabilité, Gestion & Stratégie</span>
+                            <span class="text-xs text-slate-500 block mt-0.5">60 Questions : Statistiques, Fonds de commerce, Réserve légale, TVA, Porter, PESTEL, CNSS, Cessions</span>
                         </div>
                     </button>
 
                     <button onclick="startQuiz('marches')"
                         class="flex items-start p-4 rounded-xl border-2 border-slate-200 hover:border-amber-500 hover:bg-amber-50/40 text-left transition-all group">
-                        <div
-                            class="p-2 bg-amber-50 rounded-lg text-amber-600 mr-4 group-hover:bg-amber-100 transition-colors">
+                        <div class="p-2 bg-amber-50 rounded-lg text-amber-600 mr-4 group-hover:bg-amber-100 transition-colors">
                             <i data-lucide="landmark" class="w-6 h-6"></i>
                         </div>
                         <div>
-                            <span class="font-bold text-slate-800 block text-sm sm:text-base">QCM Marchés Publics
-                                2026</span>
-                            <span class="text-xs text-slate-500 block mt-0.5">20 Questions : Principes, Procédures,
-                                Seuils, CPS, Commissions, Exécution des marchés</span>
+                            <span class="font-bold text-slate-800 block text-sm sm:text-base">QCM Marchés Publics 2026</span>
+                            <span class="text-xs text-slate-500 block mt-0.5">20 Questions : Principes, Procédures, Seuils, CPS, Commissions, Exécution des marchés</span>
                         </div>
                     </button>
 
                     <button onclick="startQuiz('hcp')"
                         class="flex items-start p-4 rounded-xl border-2 border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/40 text-left transition-all group">
-                        <div
-                            class="p-2 bg-emerald-50 rounded-lg text-emerald-600 mr-4 group-hover:bg-emerald-100 transition-colors">
+                        <div class="p-2 bg-emerald-50 rounded-lg text-emerald-600 mr-4 group-hover:bg-emerald-100 transition-colors">
                             <i data-lucide="clipboard-list" class="w-6 h-6"></i>
                         </div>
                         <div>
-                            <span class="font-bold text-slate-800 block text-sm sm:text-base">QCM HCP Techniciens
-                                3<sup>ème</sup> Grade (2025)</span>
-                            <span class="text-xs text-slate-500 block mt-0.5">30 Questions : Budget, Économie, ICE, RNB,
-                                IS, TVA, Statistiques, Marketing mix, Ratios, Amortissements</span>
+                            <span class="font-bold text-slate-800 block text-sm sm:text-base">QCM HCP Techniciens 3<sup>ème</sup> Grade (2025)</span>
+                            <span class="text-xs text-slate-500 block mt-0.5">30 Questions : Budget, Économie, ICE, RNB, IS, TVA, Statistiques, Marketing mix, Ratios, Amortissements</span>
                         </div>
                     </button>
                 </div>
@@ -529,12 +433,10 @@
             <!-- Colonne de gauche: La Question et Options -->
             <div class="w-full md:w-2/3 space-y-4">
 
-                <!-- Carte de la Question -->
-                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-                    <!-- Catégorie de la question -->
+                <!-- Carte de la Question Standard -->
+                <div id="standard-question-card" class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
                     <div class="flex items-center justify-between mb-4">
-                        <span id="question-category"
-                            class="bg-blue-50 text-blue-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                        <span id="question-category" class="bg-blue-50 text-blue-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider">
                             Comptabilité et Gestion
                         </span>
                         <span id="question-num-display" class="text-xs font-medium text-slate-400">
@@ -542,22 +444,19 @@
                         </span>
                     </div>
 
-                    <!-- Énoncé de la question -->
                     <h3 id="question-text" class="text-lg sm:text-xl font-bold text-slate-900 leading-relaxed mb-2">
                         Chargement de la question...
                     </h3>
-                    <p class="text-sm font-medium text-amber-600 mb-6 italic" id="question-instruction">Cochez-la ou les
-                        bonnes réponses dans la feuille des réponses :</p>
+                    <p class="text-sm font-medium text-amber-600 mb-6 italic" id="question-instruction">Cochez la ou les bonnes réponses dans la feuille des réponses :</p>
 
-                    <!-- Options de réponses -->
+                    <!-- Options de réponses / Container Dynamique -->
                     <div id="options-container" class="space-y-3">
                         <!-- Généré dynamiquement en JS -->
                     </div>
                 </div>
 
-                <!-- Panneau d'action principal -->
-                <div
-                    class="flex items-center justify-between bg-white rounded-2xl border border-slate-200 p-4 shadow-sm">
+                <!-- Panneau d'action principal Standard -->
+                <div id="standard-action-panel" class="flex items-center justify-between bg-white rounded-2xl border border-slate-200 p-4 shadow-sm">
                     <button id="skip-btn" onclick="skipQuestion()"
                         class="px-4 py-2 text-sm font-semibold text-slate-500 hover:text-slate-800 hover:bg-slate-50 rounded-xl transition duration-200 flex items-center space-x-1.5">
                         <span>Passer</span>
@@ -571,9 +470,8 @@
                     </button>
                 </div>
 
-                <!-- Zone d'explication -->
-                <div id="explanation-box"
-                    class="hidden bg-emerald-50 border border-emerald-100 rounded-2xl p-5 fade-in">
+                <!-- Zone d'explication Standard -->
+                <div id="explanation-box" class="hidden bg-emerald-50 border border-emerald-100 rounded-2xl p-5 fade-in">
                     <div class="flex items-start space-x-3">
                         <div class="p-1 bg-emerald-500 text-white rounded-lg mt-0.5">
                             <i data-lucide="info" class="w-4 h-4"></i>
@@ -593,14 +491,12 @@
             <div class="w-full md:w-1/3 space-y-4 md:sticky md:top-24">
 
                 <!-- Widget Avancement -->
-                <div
-                    class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex flex-col items-center text-center">
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex flex-col items-center text-center">
                     <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Progression</h3>
 
                     <div class="relative flex items-center justify-center mb-4">
                         <svg class="w-32 h-32">
-                            <circle class="text-slate-100" stroke-width="8" stroke="currentColor" fill="transparent"
-                                r="50" cx="64" cy="64" />
+                            <circle class="text-slate-100" stroke-width="8" stroke="currentColor" fill="transparent" r="50" cx="64" cy="64" />
                             <circle id="progress-circle" class="progress-ring__circle text-blue-600" stroke-width="8"
                                 stroke-dasharray="314.16" stroke-dashoffset="314.16" stroke-linecap="round"
                                 stroke="currentColor" fill="transparent" r="50" cx="64" cy="64" />
@@ -636,8 +532,7 @@
         </div>
 
         <!-- Écran Final de Résultats -->
-        <div id="result-screen"
-            class="hidden bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-sm max-w-2xl mx-auto w-full fade-in my-auto text-center">
+        <div id="result-screen" class="hidden bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-sm max-w-2xl mx-auto w-full fade-in my-auto text-center">
             <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-50 text-blue-600 mb-6">
                 <i data-lucide="trophy" class="w-12 h-12"></i>
             </div>
@@ -647,8 +542,7 @@
             <div class="my-8 bg-slate-50 rounded-2xl p-6 max-w-xs mx-auto border border-slate-100">
                 <span class="text-xs font-bold text-slate-400 uppercase block tracking-widest">Votre Score Final</span>
                 <span id="final-score" class="text-5xl font-black text-blue-600 my-1 block">1/1</span>
-                <span id="final-percentage" class="text-sm font-semibold text-slate-500 block">Taux de réussite :
-                    100%</span>
+                <span id="final-percentage" class="text-sm font-semibold text-slate-500 block">Taux de réussite : 100%</span>
             </div>
 
             <p id="final-feedback-text" class="text-slate-700 font-medium mb-8 max-w-md mx-auto">
@@ -671,19 +565,27 @@
 
     </main>
 
+    <!-- Modal Confirmation Recommencer -->
+    <div id="confirmModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl">
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Recommencer le test ?</h3>
+            <p class="text-slate-500 text-sm mb-6">Êtes-vous sûr de vouloir recommencer ce test ? Votre progression actuelle sera perdue.</p>
+            <div class="flex justify-end gap-3">
+                <button onclick="closeConfirmModal()" class="px-4 py-2 text-sm font-semibold text-slate-500 hover:bg-slate-100 rounded-lg">Annuler</button>
+                <button onclick="executeRestart()" class="px-4 py-2 text-sm font-bold text-white bg-red-600 hover:bg-red-700 rounded-lg">Recommencer</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ========== SLIMORA MODAL ========== -->
     <div class="slimora-modal-overlay" id="slimoraModalOverlay" onclick="closeSlimoraModalOnBg(event)">
         <div class="slimora-modal">
             <button class="modal-close-btn" onclick="closeSlimoraModal()">✕</button>
-
-            <!-- Modal Header -->
             <div class="text-center mb-4">
                 <span style="font-size:32px">🌿</span>
                 <h3 class="text-xl font-extrabold text-emerald-800 mt-1">Slimora Naturals</h3>
                 <span class="price-badge mt-2 inline-block">💰 150 DH</span>
             </div>
-
-            <!-- Product Description -->
             <div class="modal-desc text-sm">
                 🌿 <strong>Slimora Naturals</strong> 🌿
                 مكمل غذائي طبيعي مصمم لخسارة الوزن بطريقة صحية ومتوازنة 💚
@@ -712,28 +614,23 @@
 
                 📩 للطلب أو الاستفسار راسلنا عبر الخاص.
             </div>
-
-            <!-- Modal WhatsApp CTA -->
             <div class="text-center mt-6">
-                <a href="https://wa.me/212708216572?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن%20منتج%20Slimora%20Naturals"
-                    target="_blank" rel="noopener noreferrer" class="whatsapp-btn"
-                    style="justify-content:center; width:100%;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
-                        <path
-                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                    </svg>
+                <a href="https://wa.me/212708216572?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن%20منتج%20Slimora%20منتج"
+                    target="_blank" rel="noopener noreferrer" class="whatsapp-btn" style="justify-content:center; width:100%;">
                     📩 اطلب الآن
                 </a>
             </div>
         </div>
     </div>
 
+    <script src="CHARGES_QUESTIONS.js"></script>
     <script src="all.js"></script>
     <script src="MP_QUESTIONS.js"></script>
     <script src="HCP_QUESTIONS.js"></script>
     <script>
-
-
+        // Data sources integrated directly in this file
+        
+        
 
         let currentQuestions = [];
         let currentMode = 'all';
@@ -743,6 +640,7 @@
         let hasValidated = false;
         let questionResults = [];
 
+        // Element pointers
         const welcomeScreen = document.getElementById('welcome-screen');
         const quizArea = document.getElementById('quiz-area');
         const resultScreen = document.getElementById('result-screen');
@@ -784,6 +682,9 @@
             } else if (mode === 'hcp') {
                 currentQuestions = [...HCP_QUESTIONS];
                 questionCategory.className = "bg-emerald-50 text-emerald-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider";
+            } else if (mode === 'charges') {
+                currentQuestions = [...CHARGES_QUESTIONS];
+                questionCategory.className = "bg-violet-50 text-violet-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider";
             } else {
                 currentQuestions = [...ALL_QUESTIONS];
                 questionCategory.className = "bg-blue-50 text-blue-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider";
@@ -824,64 +725,293 @@
             updateProgress();
         }
 
+        // Custom render & handler logic for Traitement Fiscal des Charges
         function showQuestion() {
             const currentQ = currentQuestions[currentQuestionIndex];
 
             questionCategory.innerText = currentQ.category;
             questionNumDisplay.innerText = `Question ${currentQuestionIndex + 1} sur ${currentQuestions.length}`;
-            questionText.innerText = currentQ.question;
-            questionInstruction.innerText = currentQ.instruction || "";
 
-            optionsContainer.innerHTML = '';
+            // Reset standard sections visibility
+            const standardCard = document.getElementById('standard-question-card');
+            const standardAction = document.getElementById('standard-action-panel');
+            
+            explanationBox.classList.add('hidden');
 
-            currentQ.options.forEach((opt, idx) => {
-                const button = document.createElement('button');
-                const isSelected = selectedOptionIndices.includes(idx);
+            if (currentMode === 'charges') {
+                // Completely dynamic design matching requested look
+                standardCard.classList.add('hidden');
+                standardAction.classList.add('hidden');
+                
+                // Construct customized layout inside the main column
+                let customContainer = document.getElementById('custom-charges-container');
+                if (!customContainer) {
+                    customContainer = document.createElement('div');
+                    customContainer.id = 'custom-charges-container';
+                    customContainer.className = 'space-y-4 fade-in';
+                    standardCard.parentNode.insertBefore(customContainer, standardCard);
+                }
+                customContainer.classList.remove('hidden');
 
-                button.className = `option-card w-full flex items-center justify-between p-4 rounded-xl border-2 text-left transition-all ${isSelected
-                    ? 'border-blue-600 bg-blue-50/50'
-                    : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
-                    }`;
-                button.disabled = hasValidated;
-                button.onclick = () => selectOption(idx);
+                // Check state if already validated
+                const solvedState = questionResults[currentQuestionIndex];
+                const solved = solvedState !== null;
 
-                const letter = String.fromCharCode(97 + idx);
-
-                button.innerHTML = `
-                    <div class="flex items-center space-x-3">
-                        <span class="w-8 h-8 rounded-lg ${isSelected ? 'bg-blue-600 text-white border-blue-600' : 'bg-slate-100 text-slate-500 border-slate-200'} flex items-center justify-center text-sm font-extrabold border shrink-0 option-letter">${letter}</span>
-                        <span class="text-sm sm:text-base font-medium text-slate-700 option-text">${opt}</span>
-                    </div>
-                    <div class="option-indicator shrink-0 ml-2">
-                        <div class="w-5 h-5 rounded-md border-2 ${isSelected ? 'border-blue-600 bg-blue-600' : 'border-slate-300 bg-transparent'} flex items-center justify-center">
-                            ${isSelected ? '<i data-lucide="check" class="w-3 h-3 text-white"></i>' : ''}
+                // Build HTML matching the uploaded images style
+                customContainer.innerHTML = `
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                        <span class="text-sm font-bold text-slate-500 uppercase tracking-wider block mb-4">Traitement fiscal des charges :</span>
+                        
+                        <!-- Light blue border box around question -->
+                        <div class="border-2 border-sky-400 bg-slate-50 p-6 rounded-2xl min-h-[120px] mb-6 flex items-start">
+                            <p class="text-base sm:text-lg font-bold text-slate-700 whitespace-pre-line">${currentQ.question}</p>
                         </div>
+
+                        <!-- Checkboxes side-by-side -->
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <label class="flex items-center space-x-3 p-4 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition ${solved ? 'pointer-events-none opacity-80' : ''}">
+                                <input type="checkbox" id="check-deductible" class="w-5 h-5 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500" 
+                                    ${selectedOptionIndices.includes('deductible') ? 'checked' : ''} 
+                                    onchange="toggleChargesCheckbox('deductible')" ${solved ? 'disabled' : ''}>
+                                <span class="text-sm sm:text-base font-semibold text-slate-700">Déductible</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-4 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition ${solved ? 'pointer-events-none opacity-80' : ''}">
+                                <input type="checkbox" id="check-non-deductible" class="w-5 h-5 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500" 
+                                    ${selectedOptionIndices.includes('non_deductible') ? 'checked' : ''} 
+                                    onchange="toggleChargesCheckbox('non_deductible')" ${solved ? 'disabled' : ''}>
+                                <span class="text-sm sm:text-base font-semibold text-slate-700">Non déductible</span>
+                            </label>
+                        </div>
+
+                        <!-- Extra inputs container (appears if non_deductible is checked) -->
+                        <div id="extra-inputs-area" class="grid grid-cols-2 gap-4 mb-6 ${selectedOptionIndices.includes('non_deductible') ? 'fade-in' : 'hidden'}">
+                            <div>
+                                <label class="text-xs font-bold text-slate-500 block mb-2">Réintégration (+)</label>
+                                <input type="number" id="input-reintegration" 
+                                    class="w-full p-3 rounded-xl border-2 border-sky-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm font-bold" 
+                                    placeholder="" ${solved ? 'disabled' : ''}>
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-slate-500 block mb-2">Déduction (-)</label>
+                                <input type="number" id="input-deduction" 
+                                    class="w-full p-3 rounded-xl border-2 border-sky-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm font-bold" 
+                                    placeholder="" ${solved ? 'disabled' : ''}>
+                            </div>
+                        </div>
+
+                        <!-- Action Panel matching Image Buttons -->
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <button id="custom-valider-btn" onclick="validateChargesAnswer()" 
+                                class="w-full py-3 bg-[#7c3aed] hover:bg-[#6d28d9] active:bg-[#5b21b6] text-white font-extrabold rounded-xl transition shadow-md duration-200 text-sm flex items-center justify-center gap-2 ${solved ? 'opacity-50 cursor-not-allowed' : ''}" 
+                                ${solved ? 'disabled' : ''}>
+                                Valider
+                            </button>
+                            <button onclick="showMainMenu()" 
+                                class="w-full py-3 bg-[#7c3aed] hover:bg-[#6d28d9] active:bg-[#5b21b6] text-white font-extrabold rounded-xl transition shadow-md duration-200 text-sm flex items-center justify-center">
+                                Retour
+                            </button>
+                        </div>
+
+                        <!-- Full Width Explication Button -->
+                        <button id="custom-explication-btn" onclick="toggleChargesExplanation()" 
+                            class="w-full py-3 bg-[#7c3aed] hover:bg-[#6d28d9] text-white font-extrabold rounded-xl transition shadow-md duration-200 text-sm mb-4">
+                            Explication
+                        </button>
+
+                        <!-- Response Correct / Incorrect banner -->
+                        <div id="charges-feedback-banner" class="hidden rounded-xl p-3.5 flex items-center justify-center gap-2 font-bold text-sm fade-in mb-4">
+                            <!-- Injected dynamically -->
+                        </div>
+
+                        <!-- Next question button when solved -->
+                        <button id="charges-next-btn" onclick="nextQuestion()" 
+                            class="hidden w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-xl transition shadow-md duration-200 text-sm flex items-center justify-center gap-2">
+                            <span>Question suivante</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
                     </div>
                 `;
 
-                optionsContainer.appendChild(button);
-            });
+                // If solved, fill the input values and show success/failure banner immediately
+                if (solved) {
+                    const extraInputs = document.getElementById('extra-inputs-area');
+                    if (extraInputs && solvedState.selected.includes('non_deductible')) {
+                        extraInputs.classList.remove('hidden');
+                        document.getElementById('input-reintegration').value = solvedState.reintegrationVal || "";
+                        document.getElementById('input-deduction').value = solvedState.deductionVal || "";
+                    }
+                    showChargesFeedbackBanner(solvedState.isCorrect);
+                }
 
-            if (hasValidated) {
-                showFeedbackUI();
             } else {
-                explanationBox.classList.add('hidden');
-                skipBtn.classList.remove('invisible');
+                // Ensure custom layout is hidden
+                const customContainer = document.getElementById('custom-charges-container');
+                if (customContainer) customContainer.classList.add('hidden');
 
-                actionBtnText.innerText = "Valider mon choix";
-                actionBtnIcon.setAttribute('data-lucide', 'check');
+                standardCard.classList.remove('hidden');
+                standardAction.classList.remove('hidden');
 
-                if (selectedOptionIndices.length > 0) {
-                    actionBtn.className = "px-6 py-3 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-sm rounded-xl transition shadow-md shadow-blue-100 flex items-center space-x-2";
-                    actionBtn.disabled = false;
+                questionText.innerText = currentQ.question;
+                questionInstruction.innerText = currentQ.instruction || "Cochez la ou les bonnes réponses :";
+
+                optionsContainer.innerHTML = '';
+
+                currentQ.options.forEach((opt, idx) => {
+                    const button = document.createElement('button');
+                    const isSelected = selectedOptionIndices.includes(idx);
+
+                    button.className = `option-card w-full flex items-center justify-between p-4 rounded-xl border-2 text-left transition-all ${isSelected
+                        ? 'border-blue-600 bg-blue-50/50'
+                        : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                        }`;
+                    button.disabled = hasValidated;
+                    button.onclick = () => selectOption(idx);
+
+                    const letter = String.fromCharCode(97 + idx);
+
+                    button.innerHTML = `
+                        <div class="flex items-center space-x-3">
+                            <span class="w-8 h-8 rounded-lg ${isSelected ? 'bg-blue-600 text-white border-blue-600' : 'bg-slate-100 text-slate-500 border-slate-200'} flex items-center justify-center text-sm font-extrabold border shrink-0 option-letter">${letter}</span>
+                            <span class="text-sm sm:text-base font-medium text-slate-700 option-text">${opt}</span>
+                        </div>
+                        <div class="option-indicator shrink-0 ml-2">
+                            <div class="w-5 h-5 rounded-md border-2 ${isSelected ? 'border-blue-600 bg-blue-600' : 'border-slate-300 bg-transparent'} flex items-center justify-center">
+                                ${isSelected ? '<i data-lucide="check" class="w-3 h-3 text-white"></i>' : ''}
+                            </div>
+                        </div>
+                    `;
+
+                    optionsContainer.appendChild(button);
+                });
+
+                if (hasValidated) {
+                    showFeedbackUI();
                 } else {
-                    actionBtn.className = "px-6 py-3 bg-blue-600 text-white font-bold text-sm rounded-xl transition shadow-md shadow-blue-100 flex items-center space-x-2 opacity-50 cursor-not-allowed";
-                    actionBtn.disabled = true;
+                    explanationBox.classList.add('hidden');
+                    skipBtn.classList.remove('invisible');
+
+                    actionBtnText.innerText = "Valider mon choix";
+                    actionBtnIcon.setAttribute('data-lucide', 'check');
+
+                    if (selectedOptionIndices.length > 0) {
+                        actionBtn.className = "px-6 py-3 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-sm rounded-xl transition shadow-md shadow-blue-100 flex items-center space-x-2";
+                        actionBtn.disabled = false;
+                    } else {
+                        actionBtn.className = "px-6 py-3 bg-blue-600 text-white font-bold text-sm rounded-xl transition shadow-md shadow-blue-100 flex items-center space-x-2 opacity-50 cursor-not-allowed";
+                        actionBtn.disabled = true;
+                    }
                 }
             }
 
             lucide.createIcons();
             highlightQuickDots();
+        }
+
+        // Checkbox behaviour for Traitement Fiscal: Mutually exclusive
+        function toggleChargesCheckbox(type) {
+            const isDeductible = type === 'deductible';
+            const extraInputs = document.getElementById('extra-inputs-area');
+            
+            if (isDeductible) {
+                document.getElementById('check-non-deductible').checked = false;
+                selectedOptionIndices = ['deductible'];
+                if (extraInputs) extraInputs.classList.add('hidden');
+            } else {
+                document.getElementById('check-deductible').checked = false;
+                selectedOptionIndices = ['non_deductible'];
+                if (extraInputs) extraInputs.classList.remove('hidden');
+            }
+        }
+
+        function validateChargesAnswer() {
+            if (selectedOptionIndices.length === 0) return;
+
+            const currentQ = currentQuestions[currentQuestionIndex];
+            const isDeductibleSelected = selectedOptionIndices.includes('deductible');
+            
+            let isCorrect = false;
+            let reinVal = null;
+            let deducVal = null;
+
+            if (isDeductibleSelected) {
+                isCorrect = (currentQ.correct_answer.type === 'deductible');
+            } else {
+                // Non-deductible evaluation
+                const rInput = document.getElementById('input-reintegration');
+                const dInput = document.getElementById('input-deduction');
+                
+                reinVal = rInput ? parseInt(rInput.value) || null : null;
+                deducVal = dInput ? parseInt(dInput.value) || null : null;
+
+                if (currentQ.correct_answer.type === 'non_deductible') {
+                    const targetCol = currentQ.correct_answer.colonne;
+                    const expectedAmt = currentQ.correct_answer.montant;
+
+                    if (targetCol === 'reintegration') {
+                        if (expectedAmt !== null) {
+                            isCorrect = (reinVal === expectedAmt && (deducVal === null || deducVal === 0));
+                        } else {
+                            // If montant is null, correct as long as reintegration has something (or is evaluated/focused) and deduction is empty
+                            isCorrect = (reinVal !== null || deducVal === null);
+                        }
+                    } else if (targetCol === 'deduction') {
+                        if (expectedAmt !== null) {
+                            isCorrect = (deducVal === expectedAmt && (reinVal === null || reinVal === 0));
+                        } else {
+                            isCorrect = (deducVal !== null || reinVal === null);
+                        }
+                    }
+                }
+            }
+
+            if (isCorrect) score++;
+
+            questionResults[currentQuestionIndex] = {
+                selected: [...selectedOptionIndices],
+                isCorrect: isCorrect,
+                reintegrationVal: reinVal,
+                deductionVal: deducVal
+            };
+
+            showChargesFeedbackBanner(isCorrect);
+            updateProgress();
+            
+            // Disable Valider button, show Next question button
+            const validerBtn = document.getElementById('custom-valider-btn');
+            if (validerBtn) {
+                validerBtn.disabled = true;
+                validerBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        function showChargesFeedbackBanner(isCorrect) {
+            const banner = document.getElementById('charges-feedback-banner');
+            const nextBtn = document.getElementById('charges-next-btn');
+            if (!banner) return;
+
+            banner.classList.remove('hidden');
+            if (isCorrect) {
+                banner.className = "rounded-xl p-3.5 flex items-center justify-center gap-2 font-bold text-sm bg-emerald-100 text-emerald-800 border-2 border-emerald-200 fade-in mb-4";
+                banner.innerHTML = `<i data-lucide="check-circle" class="w-5 h-5 text-emerald-600"></i> Réponse correcte!`;
+            } else {
+                banner.className = "rounded-xl p-3.5 flex items-center justify-center gap-2 font-bold text-sm bg-rose-100 text-rose-800 border-2 border-rose-200 fade-in mb-4";
+                banner.innerHTML = `<i data-lucide="x-circle" class="w-5 h-5 text-rose-600"></i> Réponse incorrecte!`;
+            }
+            if (nextBtn) nextBtn.classList.remove('hidden');
+            lucide.createIcons();
+            highlightQuickDots();
+        }
+
+        function toggleChargesExplanation() {
+            const currentQ = currentQuestions[currentQuestionIndex];
+            explanationText.innerText = currentQ.correct_answer.explication;
+            
+            if (explanationBox.classList.contains('hidden')) {
+                explanationBox.classList.remove('hidden');
+                explanationBox.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                explanationBox.classList.add('hidden');
+            }
         }
 
         function highlightQuickDots() {
@@ -1078,6 +1208,9 @@
             welcomeScreen.classList.remove('hidden');
             restartBtnNav.classList.add('hidden');
 
+            const customContainer = document.getElementById('custom-charges-container');
+            if (customContainer) customContainer.classList.add('hidden');
+
             currentQuestions = [];
             currentQuestionIndex = 0;
             selectedOptionIndices = [];
@@ -1092,11 +1225,19 @@
             startQuiz(currentMode);
         }
 
+        // Safe Custom Confirmation Dialog Instead of confirm()
         document.getElementById('restart-btn-nav').onclick = () => {
-            if (confirm("Êtes-vous sûr de vouloir recommencer ce test ?")) {
-                restartApp();
-            }
+            document.getElementById('confirmModal').classList.remove('hidden');
         };
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.add('hidden');
+        }
+
+        function executeRestart() {
+            closeConfirmModal();
+            restartApp();
+        }
 
         // ========== SLIMORA SIDEBAR SLIDER ==========
         let sCurrent = 0;

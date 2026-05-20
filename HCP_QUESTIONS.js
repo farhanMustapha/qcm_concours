@@ -110,7 +110,7 @@ const HCP_QUESTIONS = [
             "Autre ......"
         ],
         answer: [2,3],
-        explanation: "Le taux de TVA de droit commun applicable aux opérations de transport (de voyageurs ou de marchandises) au Maroc est fixé à 14%."
+        explanation: "Le taux de TVA de droit commun applicable aux opérations de transport (de voyageurs ou de marchandises) au Maroc apres 2025 est fixé à 10% ou 20% selon la nature de l'opération."
     },
     {
         id: 9,

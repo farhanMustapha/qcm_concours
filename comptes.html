@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-slate-50">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Comptable Interactif - Exercices & Explications</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons for modern UI -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Local fallback script to bypass CORS issue -->
+    <script src="COMPTES_DATA.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Underline input style for journal entry */
+        .journal-underline-input {
+            border-bottom: 2px solid #94a3b8;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            background-color: transparent;
+            border-radius: 0;
+            padding: 8px 4px;
+            width: 100%;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .journal-underline-input:focus {
+            outline: none;
+            border-bottom-color: #3b82f6;
+            box-shadow: none;
+        }
+
+        .journal-underline-input.correct {
+            border-bottom-color: #10b981;
+            color: #047857;
+            font-weight: 600;
+        }
+
+        .journal-underline-input.incorrect {
+            border-bottom-color: #ef4444;
+            color: #b91c1c;
+            font-weight: 600;
+        }
+
+        /* Scrollbar custom styles */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .rtl-container {
+            direction: rtl;
+            text-align: right;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6750A4',      // Purple color from images
+                        primaryHover: '#533f8a', // Darker purple
+                        skyBorder: '#3b82f6',    // Blue borders
+                        headerBg: '#BCE4F2',     // Light blue table header
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="h-full flex flex-col justify-between text-slate-800">
+
+    <!-- Top Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <a href="index.html" class="flex items-center text-slate-500 hover:text-slate-800 transition-colors mr-2" title="Retour à l'accueil">
+                    <i data-lucide="arrow-left" class="w-6 h-6"></i>
+                </a>
+                <div class="bg-blue-600 text-white p-2 rounded-xl shadow-md flex items-center justify-center">
+                    <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="text-[10px] font-bold text-blue-600 tracking-wider uppercase block">Plateforme QCM</span>
+                    <h1 class="text-base font-extrabold text-slate-900 leading-tight">Plan Comptable Marocain</h1>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                <span class="text-xs text-slate-400 font-medium hidden sm:inline">Simulation Interactive</span>
+                <div class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-1">
+                    <span id="nav-mode-indicator">Détails & Pratique</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Tabs (visible only on mobile/tablet) -->
+    <div class="lg:hidden bg-white border-b border-slate-200 flex justify-around">
+        <button id="tab-list-btn" onclick="switchMobileTab('list')" class="w-1/2 py-3 text-center border-b-2 border-blue-600 font-bold text-sm text-blue-600 transition-all">
+            <span class="flex items-center justify-center gap-1.5">
+                <i data-lucide="list" class="w-4 h-4"></i> Liste des Comptes
+            </span>
+        </button>
+        <button id="tab-detail-btn" onclick="switchMobileTab('detail')" class="w-1/2 py-3 text-center border-b-2 border-transparent font-medium text-sm text-slate-500 hover:text-slate-800 transition-all">
+            <span class="flex items-center justify-center gap-1.5">
+                <i data-lucide="book-open" class="w-4 h-4"></i> Explications & Pratique
+            </span>
+        </button>
+    </div>
+
+    <!-- Main Workspace -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6 overflow-hidden">
+        
+        <!-- LEFT COLUMN: Search & Accounts List -->
+        <section id="left-column" class="w-full lg:w-4/12 flex flex-col bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden h-[calc(100vh-180px)] lg:h-[calc(100vh-120px)]">
+            <!-- Search Box -->
+            <div class="p-4 border-b border-slate-100 bg-slate-50/50">
+                <div class="relative">
+                    <input type="text" id="search-input" placeholder="chercher un compte" 
+                           class="w-full pl-10 pr-4 py-2.5 border-2 border-slate-200 rounded-xl bg-white text-slate-800 text-sm focus:border-skyBorder focus:ring-0 focus:outline-none transition-all placeholder:text-slate-400">
+                    <div class="absolute left-3.5 top-3.5 text-slate-400">
+                        <i data-lucide="search" class="w-4.5 h-4.5"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- List Container -->
+            <div id="accounts-list" class="flex-grow overflow-y-auto divide-y divide-slate-100">
+                <div class="p-8 text-center text-slate-400">
+                    <div class="animate-pulse flex flex-col items-center">
+                        <div class="rounded-full bg-slate-100 p-3 mb-2">
+                            <i data-lucide="loader-2" class="w-6 h-6 animate-spin text-slate-400"></i>
+                        </div>
+                        <p class="text-sm font-medium">Chargement des comptes...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT COLUMN: Account details & Practice area -->
+        <section id="right-column" class="hidden lg:flex w-full lg:w-8/12 flex-col bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden h-[calc(100vh-180px)] lg:h-[calc(100vh-120px)]">
+            
+            <!-- Default / Empty State -->
+            <div id="empty-state" class="flex-grow flex flex-col items-center justify-center p-8 text-center bg-slate-50/20">
+                <div class="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mb-6 shadow-sm">
+                    <i data-lucide="graduation-cap" class="w-10 h-10"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Sélectionnez un compte</h3>
+                <p class="text-slate-500 text-sm max-w-sm">
+                    Choisissez un compte dans la liste de gauche pour afficher ses explications détaillées (Français et Darija) et vous entraîner aux écritures de journal.
+                </p>
+            </div>
+
+            <!-- EXPLANATION VIEW -->
+            <div id="explanation-view" class="hidden flex-grow flex flex-col h-full overflow-hidden fade-in">
+                <!-- Selected Account Title Bar -->
+                <div class="bg-blue-600 text-white px-6 py-4 flex items-center justify-between shrink-0 shadow-sm">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="book-open" class="w-5 h-5"></i>
+                        <h2 id="exp-account-title" class="font-extrabold text-base sm:text-lg tracking-wide">
+                            6111: Achats de marchandises (Groupe A)
+                        </h2>
+                    </div>
+                    <button class="text-white hover:text-blue-100 transition-colors" title="Menu">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <!-- Scrollable explanations content -->
+                <div class="flex-grow overflow-y-auto p-6 space-y-6">
+                    
+
+
+                    <!-- French Explanation Box -->
+                    <div class="space-y-2">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block px-1">Explication en Français :</span>
+                        <div class="border-2 border-blue-400 bg-slate-50 p-6 rounded-2xl shadow-sm text-slate-800 text-sm leading-relaxed whitespace-pre-line" id="exp-french-content">
+                            <!-- French text -->
+                        </div>
+                    </div>
+
+                    <!-- Darija Explanation Box -->
+                    <div class="space-y-2">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block px-1 text-right">الشرح بالدارجة :</span>
+                        <div class="border-2 border-blue-400 bg-slate-50 p-6 rounded-2xl shadow-sm text-slate-800 text-base leading-loose whitespace-pre-line rtl-container" id="exp-darija-content">
+                            <!-- Darija text -->
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Footer button panel (Exemple only, Question removed) -->
+                <div class="bg-slate-50 border-t border-slate-100 p-4 flex justify-end shrink-0 gap-3">
+                    <button id="start-practice-btn" onclick="startPractice()" 
+                            class="px-8 py-3 bg-primary hover:bg-primaryHover text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-violet-100 flex items-center justify-center space-x-2 w-full sm:w-auto">
+                        <i data-lucide="play" class="w-4 h-4"></i>
+                        <span>Exemple</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PRACTICE/EXERCISE VIEW -->
+            <div id="practice-view" class="hidden flex-grow flex flex-col h-full overflow-hidden fade-in">
+                <!-- Practice Header -->
+                <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between shrink-0 shadow-sm">
+                    <div class="flex items-center space-x-3">
+                        <button onclick="backToExplanation()" class="text-slate-300 hover:text-white transition-colors" title="Retour aux explications">
+                            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        </button>
+                        <h2 class="font-extrabold text-base sm:text-lg tracking-wide flex items-center gap-2">
+                            <span>Pratique : Journalisation</span>
+                            <span id="practice-badge" class="bg-blue-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full">Exemple 1/1</span>
+                        </h2>
+                    </div>
+                    <button onclick="backToExplanation()" class="text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg transition-colors">
+                        Explication
+                    </button>
+                </div>
+
+                <!-- Scrollable Exercise Saisie -->
+                <div class="flex-grow overflow-y-auto p-6 space-y-6">
+                    
+                    <!-- Question Box -->
+                    <div class="border-2 border-blue-400 bg-slate-50 p-6 rounded-2xl shadow-sm">
+                        <p id="practice-question" class="text-slate-800 font-bold text-sm sm:text-base leading-relaxed whitespace-pre-line">
+                            Achat de marchandises le 01/01/2024 pour un montant de 6 000 DH, exonéré de TVA
+                        </p>
+                    </div>
+
+                    <!-- Journal & Date Header Inputs -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label for="practice-journal" class="text-xs font-bold text-slate-400 block px-1">Choisissez un journal</label>
+                            <input type="text" id="practice-journal" list="journal-options" placeholder="Choisissez un journal"
+                                   class="w-full px-4 py-2.5 border-2 border-blue-400 bg-white rounded-xl text-slate-800 text-sm focus:border-blue-500 focus:outline-none transition-colors">
+                            <datalist id="journal-options">
+                                <option value="Achat">
+                                <option value="Vente">
+                                <option value="Banque">
+                                <option value="Caisse">
+                                <option value="OD">
+                            </datalist>
+                        </div>
+                        <div class="space-y-1">
+                            <label for="practice-date" class="text-xs font-bold text-slate-400 block px-1">date de l'opération</label>
+                            <input type="text" id="practice-date" placeholder="date de l'opération (JJ/MM/AAAA)"
+                                   class="w-full px-4 py-2.5 border-2 border-blue-400 bg-white rounded-xl text-slate-800 text-sm focus:border-blue-500 focus:outline-none transition-colors">
+                        </div>
+                    </div>
+
+                    <!-- Journal Entry Table -->
+                    <div class="border border-slate-200 rounded-xl overflow-hidden shadow-sm bg-white">
+                        <div class="grid grid-cols-12 bg-headerBg text-slate-800 font-bold text-xs uppercase tracking-wider py-3 text-center border-b border-slate-200">
+                            <div class="col-span-5 border-r border-slate-200">Compte</div>
+                            <div class="col-span-3 border-r border-slate-200">Débit</div>
+                            <div class="col-span-3 border-r border-slate-200">Crédit</div>
+                            <div class="col-span-1">Action</div>
+                        </div>
+
+                        <!-- Rows container -->
+                        <div id="journal-rows-container" class="divide-y divide-slate-100">
+                            <!-- Dynamic rows will be inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Add Row Control -->
+                    <div class="flex justify-between items-center px-1">
+                        <button onclick="addNewJournalRow()" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1.5 transition-colors">
+                            <i data-lucide="plus-circle" class="w-4.5 h-4.5"></i>
+                            Ajouter une ligne
+                        </button>
+                        <span class="text-xs text-slate-400 italic">L'écriture peut commencer par n'importe quelle ligne.</span>
+                    </div>
+
+                    <!-- Validation Feedback Banner -->
+                    <div id="validation-feedback" class="hidden rounded-2xl p-5 fade-in">
+                        <!-- Filled by JS -->
+                    </div>
+
+                    <!-- Solution Box (collapsible) -->
+                    <div id="solution-box" class="hidden border-2 border-blue-400 bg-slate-50/50 rounded-2xl p-6 fade-in space-y-3">
+                        <h4 class="font-extrabold text-blue-900 text-sm flex items-center gap-1.5">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-emerald-500"></i> Corrigé Officiel
+                        </h4>
+                        <div class="text-slate-800 text-sm space-y-2 border-t border-blue-100 pt-3">
+                            <div class="grid grid-cols-2 gap-2 text-xs">
+                                <div><strong class="text-slate-500">Journal :</strong> <span id="sol-journal" class="font-bold text-slate-800">Achat</span></div>
+                                <div><strong class="text-slate-500">Date :</strong> <span id="sol-date" class="font-bold text-slate-800">01/01/2024</span></div>
+                            </div>
+                            <div class="space-y-1.5 mt-3 bg-white p-3.5 rounded-xl border border-slate-200">
+                                <div class="grid grid-cols-12 text-xs font-bold border-b pb-1.5 mb-1.5 text-slate-400">
+                                    <div class="col-span-6">Compte</div>
+                                    <div class="col-span-3 text-right">Débit</div>
+                                    <div class="col-span-3 text-right">Crédit</div>
+                                </div>
+                                <div id="sol-entries-list" class="space-y-1 text-sm font-mono">
+                                    <!-- Dynamic items -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Footer buttons for practice -->
+                <div class="bg-slate-50 border-t border-slate-100 p-4 flex flex-wrap gap-3 shrink-0 items-center justify-between">
+                    <div>
+                        <button onclick="toggleSolution()" 
+                                class="px-5 py-3 bg-white border border-slate-300 hover:border-slate-400 text-slate-700 font-bold text-sm rounded-xl transition-all flex items-center justify-center space-x-1.5 shadow-sm">
+                            <i data-lucide="eye" class="w-4 h-4"></i>
+                            <span>Solution</span>
+                        </button>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="validatePractice()" 
+                                class="px-6 py-3 bg-primary hover:bg-primaryHover text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-violet-100 flex items-center justify-center space-x-1.5">
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                            <span>Valider</span>
+                        </button>
+                        <button id="next-example-btn" onclick="nextExample()" 
+                                class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-blue-100 flex items-center justify-center space-x-1.5">
+                            <span>Suivant</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Script loading and interactive logic -->
+    <script>
+        let accountsData = [];
+        let selectedAccount = null;
+        let activeExampleIndex = 0;
+        let currentView = 'explanation'; // 'explanation' or 'practice'
+        let mobileActiveTab = 'list'; // 'list' or 'detail'
+        
+        // DOM Elements
+        const accountsListContainer = document.getElementById('accounts-list');
+        const searchInput = document.getElementById('search-input');
+        const emptyState = document.getElementById('empty-state');
+        const explanationView = document.getElementById('explanation-view');
+        const practiceView = document.getElementById('practice-view');
+        const rightColumn = document.getElementById('right-column');
+        const leftColumn = document.getElementById('left-column');
+        
+        // Expose components
+        const expAccountTitle = document.getElementById('exp-account-title');
+        const expFrenchContent = document.getElementById('exp-french-content');
+        const expDarijaContent = document.getElementById('exp-darija-content');
+        const startPracticeBtn = document.getElementById('start-practice-btn');
+        
+        // Exercise elements
+        const practiceBadge = document.getElementById('practice-badge');
+        const practiceQuestion = document.getElementById('practice-question');
+        const practiceJournalInput = document.getElementById('practice-journal');
+        const practiceDateInput = document.getElementById('practice-date');
+        const journalRowsContainer = document.getElementById('journal-rows-container');
+        const validationFeedback = document.getElementById('validation-feedback');
+        const solutionBox = document.getElementById('solution-box');
+        const nextExampleBtn = document.getElementById('next-example-btn');
+        
+        // Solution Box Elements
+        const solJournal = document.getElementById('sol-journal');
+        const solDate = document.getElementById('sol-date');
+        const solEntriesList = document.getElementById('sol-entries-list');
+
+        // Initial Load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadAccounts();
+            lucide.createIcons();
+        });
+
+        // Fetch JSON accounts data
+        async function loadAccounts() {
+            // Check if data is already loaded globally via JS script tag (bypasses local CORS issue)
+            if (typeof COMPTES_DATA !== 'undefined') {
+                accountsData = COMPTES_DATA;
+                renderAccountsList(accountsData);
+                return;
+            }
+
+            try {
+                const response = await fetch('comptes.json');
+                if (!response.ok) {
+                    throw new Error("Impossible de charger le fichier comptes.json.");
+                }
+                accountsData = await response.json();
+                renderAccountsList(accountsData);
+            } catch (err) {
+                console.error(err);
+                accountsListContainer.innerHTML = `
+                    <div class="p-6 text-center text-red-600 bg-red-50 m-4 rounded-xl border border-red-100">
+                        <i data-lucide="alert-triangle" class="w-10 h-10 mx-auto text-red-500 mb-3"></i>
+                        <h4 class="font-bold text-sm">Erreur de chargement</h4>
+                        <p class="text-xs text-red-500 mt-1 leading-relaxed">
+                            Les navigateurs bloquent souvent la lecture locale de fichiers JSON (erreur CORS) si vous ouvrez ce fichier directement.
+                        </p>
+                        <div class="mt-4 p-2.5 bg-slate-900 text-slate-300 text-[10px] font-mono rounded-lg text-left select-all">
+                            npx http-server -p 8080
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-2">
+                            Démarrez un serveur local pour exécuter l'application correctement.
+                        </p>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+        }
+
+        // Render Sidebar Account items
+        function renderAccountsList(accounts) {
+            accountsListContainer.innerHTML = '';
+            
+            if (accounts.length === 0) {
+                accountsListContainer.innerHTML = `
+                    <div class="p-8 text-center text-slate-400 text-sm">
+                        Aucun compte ne correspond à votre recherche.
+                    </div>
+                `;
+                return;
+            }
+
+            accounts.forEach(acc => {
+                const item = document.createElement('div');
+                item.id = `acc-item-${acc.numero}`;
+                item.className = `flex flex-col py-3.5 px-5 cursor-pointer border-l-4 border-l-transparent border-b border-slate-100 hover:bg-slate-50 transition-all select-none`;
+                
+                // Content format: "numero: titre"
+                item.innerHTML = `
+                    <span class="text-sm font-semibold text-slate-700 block">${acc.numero}: ${acc.titre}</span>
+                `;
+                
+                item.onclick = () => selectAccount(acc);
+                accountsListContainer.appendChild(item);
+            });
+        }
+
+        // Search Input Filter
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            const filtered = accountsData.filter(acc => 
+                acc.numero.toLowerCase().includes(query) || 
+                acc.titre.toLowerCase().includes(query)
+            );
+            renderAccountsList(filtered);
+        });
+
+        // Select and display account explanations
+        function selectAccount(acc) {
+            selectedAccount = acc;
+            activeExampleIndex = 0;
+            currentView = 'explanation';
+            
+            // Highlight active sidebar item
+            document.querySelectorAll('#accounts-list > div').forEach(el => {
+                el.classList.remove('bg-blue-50/50', 'border-l-blue-600', 'font-bold');
+            });
+            const activeItem = document.getElementById(`acc-item-${acc.numero}`);
+            if (activeItem) {
+                activeItem.classList.add('bg-blue-50/50', 'border-l-blue-600', 'font-bold');
+            }
+
+            // Hide empty state, show content
+            emptyState.classList.add('hidden');
+            explanationView.classList.remove('hidden');
+            practiceView.classList.add('hidden');
+
+            // Set content
+            const titleStr = `${acc.numero}: ${acc.titre}`;
+            expAccountTitle.innerText = titleStr;
+            
+            expFrenchContent.innerText = acc.explication || "Aucune explication en Français disponible.";
+            expDarijaContent.innerText = acc.exp_darija || "الشرح بالدارجة غير متوفر حالياً.";
+
+            // Handle practice example button presence
+            if (acc.exemples && acc.exemples.length > 0) {
+                startPracticeBtn.disabled = false;
+                startPracticeBtn.className = "px-8 py-3 bg-primary hover:bg-primaryHover text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-violet-100 flex items-center justify-center space-x-2 w-full sm:w-auto opacity-100 cursor-pointer";
+                startPracticeBtn.innerHTML = `
+                    <i data-lucide="play" class="w-4 h-4"></i>
+                    <span>Exemple (${acc.exemples.length})</span>
+                `;
+            } else {
+                startPracticeBtn.disabled = true;
+                startPracticeBtn.className = "px-8 py-3 bg-slate-200 text-slate-400 font-bold text-sm rounded-xl flex items-center justify-center space-x-2 w-full sm:w-auto cursor-not-allowed";
+                startPracticeBtn.innerHTML = `
+                    <i data-lucide="play-block" class="w-4 h-4 text-slate-300"></i>
+                    <span>Pas d'Exemple</span>
+                `;
+            }
+            
+            // Make sure right column is shown on mobile if clicking account
+            if (window.innerWidth < 1024) {
+                switchMobileTab('detail');
+            }
+            
+            lucide.createIcons();
+        }
+
+        // Toggle to Practice Exercise Panel
+        function startPractice() {
+            if (!selectedAccount || !selectedAccount.exemples || selectedAccount.exemples.length === 0) return;
+            
+            currentView = 'practice';
+            explanationView.classList.add('hidden');
+            practiceView.classList.remove('hidden');
+            
+            loadExample(activeExampleIndex);
+        }
+
+        // Load specific example for active account
+        function loadExample(index) {
+            const examples = selectedAccount.exemples;
+            if (index < 0 || index >= examples.length) return;
+            
+            activeExampleIndex = index;
+            const ex = examples[index];
+            
+            // Badge & Info
+            practiceBadge.innerText = `Exemple ${index + 1}/${examples.length}`;
+            practiceQuestion.innerText = ex.qst;
+            
+            // Reset Inputs
+            practiceJournalInput.value = '';
+            practiceJournalInput.classList.remove('border-green-500', 'border-red-500');
+            practiceDateInput.value = '';
+            practiceDateInput.classList.remove('border-green-500', 'border-red-500');
+            
+            validationFeedback.className = "hidden rounded-2xl p-5 fade-in";
+            validationFeedback.innerHTML = "";
+            
+            solutionBox.classList.add('hidden');
+            
+            // Build default journal entry rows
+            // Always display exactly 2 lines initially
+            journalRowsContainer.innerHTML = '';
+            for (let i = 0; i < 2; i++) {
+                addJournalRowElement();
+            }
+            
+            // Configure next button
+            if (index < examples.length - 1) {
+                nextExampleBtn.innerText = "Suivant";
+                nextExampleBtn.onclick = () => nextExample();
+                nextExampleBtn.className = "px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-blue-100 flex items-center justify-center space-x-1.5 opacity-100 cursor-pointer";
+            } else {
+                nextExampleBtn.innerText = "Terminer";
+                nextExampleBtn.onclick = () => backToExplanation();
+                nextExampleBtn.className = "px-6 py-3 bg-slate-700 hover:bg-slate-800 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-slate-200 flex items-center justify-center space-x-1.5 opacity-100 cursor-pointer";
+            }
+
+            // Populate Solution details ahead of time
+            buildSolutionBox(ex);
+            
+            lucide.createIcons();
+        }
+
+        // Add row element inside double-entry table
+        function addJournalRowElement() {
+            const index = journalRowsContainer.children.length;
+            const row = document.createElement('div');
+            row.className = "grid grid-cols-12 gap-2 py-3 px-3 items-center hover:bg-slate-50/50 transition-colors";
+            row.innerHTML = `
+                <div class="col-span-5 relative">
+                    <input type="text" placeholder="ex: 6111" class="journal-underline-input" data-field="compte" oninput="clearAmountInput(this)">
+                </div>
+                <div class="col-span-3">
+                    <input type="text" placeholder="0" class="journal-underline-input" data-field="debit" oninput="toggleDebitCredit(this, 'debit')">
+                </div>
+                <div class="col-span-3">
+                    <input type="text" placeholder="0" class="journal-underline-input" data-field="credit" oninput="toggleDebitCredit(this, 'credit')">
+                </div>
+                <div class="col-span-1 text-center">
+                    <button onclick="deleteJournalRow(this)" class="delete-row-btn text-red-500 hover:text-red-700 p-1 rounded transition-colors" title="Supprimer la ligne">
+                        <i data-lucide="trash-2" class="w-4.5 h-4.5 mx-auto"></i>
+                    </button>
+                </div>
+            `;
+            journalRowsContainer.appendChild(row);
+            updateDeleteButtonsVisibility();
+            lucide.createIcons();
+        }
+
+        // Hide or disable delete buttons if the count of rows is <= 2
+        function updateDeleteButtonsVisibility() {
+            const rows = journalRowsContainer.children;
+            const deleteButtons = journalRowsContainer.querySelectorAll('.delete-row-btn');
+            if (rows.length <= 2) {
+                deleteButtons.forEach(btn => {
+                    btn.classList.add('opacity-0', 'pointer-events-none');
+                });
+            } else {
+                deleteButtons.forEach(btn => {
+                    btn.classList.remove('opacity-0', 'pointer-events-none');
+                });
+            }
+        }
+
+        // Delete a journal row
+        function deleteJournalRow(btn) {
+            const row = btn.closest('.grid');
+            if (journalRowsContainer.children.length > 2) {
+                row.remove();
+                updateDeleteButtonsVisibility();
+            }
+        }
+
+        // Action helper for dynamic row inputs addition
+        function addNewJournalRow() {
+            addJournalRowElement();
+        }
+
+        // Logic helper: clear opposite amount box to avoid writing on both debit & credit in one row
+        function toggleDebitCredit(input, activeField) {
+            const row = input.closest('.grid');
+            if (activeField === 'debit' && input.value.trim() !== '') {
+                row.querySelector('[data-field="credit"]').value = '';
+            } else if (activeField === 'credit' && input.value.trim() !== '') {
+                row.querySelector('[data-field="debit"]').value = '';
+            }
+            // Remove error colorings when editing
+            input.classList.remove('correct', 'incorrect');
+            row.querySelector('[data-field="compte"]').classList.remove('correct', 'incorrect');
+            const oppField = activeField === 'debit' ? 'credit' : 'debit';
+            row.querySelector(`[data-field="${oppField}"]`).classList.remove('correct', 'incorrect');
+        }
+
+        function clearAmountInput(input) {
+            input.classList.remove('correct', 'incorrect');
+            const row = input.closest('.grid');
+            row.querySelector('[data-field="debit"]').classList.remove('correct', 'incorrect');
+            row.querySelector('[data-field="credit"]').classList.remove('correct', 'incorrect');
+        }
+
+        // Return back to explanation layout
+        function backToExplanation() {
+            currentView = 'explanation';
+            explanationView.classList.remove('hidden');
+            practiceView.classList.add('hidden');
+            document.getElementById('nav-mode-indicator').innerText = "Détails & Pratique";
+        }
+
+        // Navigate examples
+        function nextExample() {
+            if (!selectedAccount || !selectedAccount.exemples) return;
+            if (activeExampleIndex < selectedAccount.exemples.length - 1) {
+                loadExample(activeExampleIndex + 1);
+            }
+        }
+
+        // Toggle solution pane
+        function toggleSolution() {
+            solutionBox.classList.toggle('hidden');
+            lucide.createIcons();
+        }
+
+        // Prepare the solution box content
+        function buildSolutionBox(ex) {
+            solJournal.innerText = ex.reponse.journal;
+            solDate.innerText = ex.reponse.date;
+            
+            solEntriesList.innerHTML = '';
+            
+            // Build debit rows list
+            ex.reponse.comptes_debit.forEach((compte, idx) => {
+                const amount = ex.reponse.montants_debit[idx];
+                const item = document.createElement('div');
+                item.className = "grid grid-cols-12 py-1 text-emerald-700 font-medium";
+                item.innerHTML = `
+                    <div class="col-span-6 font-semibold">${compte}</div>
+                    <div class="col-span-3 text-right">${amount} DH</div>
+                    <div class="col-span-3"></div>
+                `;
+                solEntriesList.appendChild(item);
+            });
+            
+            // Build credit rows list
+            ex.reponse.comptes_credit.forEach((compte, idx) => {
+                const amount = ex.reponse.montants_credit[idx];
+                const item = document.createElement('div');
+                item.className = "grid grid-cols-12 py-1 text-slate-700 font-medium";
+                item.innerHTML = `
+                    <div class="col-span-6 pl-6 font-semibold">  ${compte}</div>
+                    <div class="col-span-3"></div>
+                    <div class="col-span-3 text-right">${Math.abs(parseFloat(amount))} DH</div>
+                `;
+                solEntriesList.appendChild(item);
+            });
+        }
+
+        // Normalize Date formats for flexible comparison
+        function normalizeDate(d) {
+            if (!d) return '';
+            let val = d.trim().replace(/[-.]/g, '/');
+            // If format is YYYY/MM/DD, convert to DD/MM/YYYY
+            if (val.match(/^\d{4}\/\d{2}\/\d{2}$/)) {
+                const p = val.split('/');
+                return `${p[2]}/${p[1]}/${p[0]}`;
+            }
+            return val;
+        }
+
+        // VALIDATION ALGORITHM
+        function validatePractice() {
+            if (!selectedAccount || !selectedAccount.exemples) return;
+            const ex = selectedAccount.exemples[activeExampleIndex];
+            const answer = ex.reponse;
+            
+            let errors = [];
+            
+            // 1. Validate Journal Name
+            const userJournal = practiceJournalInput.value.trim().toLowerCase();
+            const correctJournal = answer.journal.trim().toLowerCase();
+            if (userJournal === correctJournal) {
+                practiceJournalInput.classList.remove('border-red-500');
+                practiceJournalInput.classList.add('border-green-500');
+            } else {
+                practiceJournalInput.classList.remove('border-green-500');
+                practiceJournalInput.classList.add('border-red-500');
+                errors.push("Le journal saisi est incorrect.");
+            }
+            
+            // 2. Validate Date
+            const userDate = normalizeDate(practiceDateInput.value);
+            const correctDate = normalizeDate(answer.date);
+            if (userDate === correctDate) {
+                practiceDateInput.classList.remove('border-red-500');
+                practiceDateInput.classList.add('border-green-500');
+            } else {
+                practiceDateInput.classList.remove('border-green-500');
+                practiceDateInput.classList.add('border-red-500');
+                errors.push("La date de l'opération est incorrecte.");
+            }
+            
+            // Gather correct answers maps
+            const expectedDebits = [];
+            answer.comptes_debit.forEach((compte, idx) => {
+                expectedDebits.push({
+                    compte: compte.trim(),
+                    amount: parseFloat(answer.montants_debit[idx])
+                });
+            });
+            
+            const expectedCredits = [];
+            answer.comptes_credit.forEach((compte, idx) => {
+                expectedCredits.push({
+                    compte: compte.trim(),
+                    amount: Math.abs(parseFloat(answer.montants_credit[idx])) // Match absolute value
+                });
+            });
+            
+            // Gather user inputs
+            const userRows = [];
+            const rows = journalRowsContainer.children;
+            
+            for (let i = 0; i < rows.length; i++) {
+                const compteInput = rows[i].querySelector('[data-field="compte"]');
+                const debitInput = rows[i].querySelector('[data-field="debit"]');
+                const creditInput = rows[i].querySelector('[data-field="credit"]');
+                
+                // Clear previous colors
+                compteInput.classList.remove('correct', 'incorrect');
+                debitInput.classList.remove('correct', 'incorrect');
+                creditInput.classList.remove('correct', 'incorrect');
+                
+                const c = compteInput.value.trim();
+                const d = debitInput.value.trim();
+                const cr = creditInput.value.trim();
+                
+                if (c !== '' || d !== '' || cr !== '') {
+                    userRows.push({
+                        elCompte: compteInput,
+                        elDebit: debitInput,
+                        elCredit: creditInput,
+                        compte: c,
+                        debit: d !== '' ? parseFloat(d) : null,
+                        credit: cr !== '' ? parseFloat(cr) : null,
+                        matched: false
+                    });
+                }
+            }
+            
+            // Try to match user rows with expected debits and credits
+            // Since user can start at any row, order doesn't matter.
+            // Highlight each user row individually.
+            userRows.forEach(userRow => {
+                if (userRow.debit !== null && !isNaN(userRow.debit)) {
+                    // Try to match in expectedDebits
+                    const matchIdx = expectedDebits.findIndex(ed => 
+                        ed.compte === userRow.compte && 
+                        Math.abs(ed.amount - userRow.debit) < 0.01
+                    );
+                    if (matchIdx !== -1) {
+                        userRow.matched = true;
+                        userRow.elCompte.classList.add('correct');
+                        userRow.elDebit.classList.add('correct');
+                        // Remove from search array to handle duplicate accounts correctly
+                        expectedDebits.splice(matchIdx, 1);
+                    } else {
+                        userRow.elCompte.classList.add('incorrect');
+                        userRow.elDebit.classList.add('incorrect');
+                    }
+                } else if (userRow.credit !== null && !isNaN(userRow.credit)) {
+                    // Try to match in expectedCredits
+                    const matchIdx = expectedCredits.findIndex(ec => 
+                        ec.compte === userRow.compte && 
+                        (Math.abs(ec.amount - userRow.credit) < 0.01 || Math.abs(ec.amount + userRow.credit) < 0.01)
+                    );
+                    if (matchIdx !== -1) {
+                        userRow.matched = true;
+                        userRow.elCompte.classList.add('correct');
+                        userRow.elCredit.classList.add('correct');
+                        expectedCredits.splice(matchIdx, 1);
+                    } else {
+                        userRow.elCompte.classList.add('incorrect');
+                        userRow.elCredit.classList.add('incorrect');
+                    }
+                } else {
+                    // Saisie incomplete (ex: compte sans montant, ou montant sans compte)
+                    userRow.elCompte.classList.add('incorrect');
+                    if (debitInput) userRow.elDebit.classList.add('incorrect');
+                    if (creditInput) userRow.elCredit.classList.add('incorrect');
+                }
+            });
+            
+            // Check remaining unmatched items to form final error notes
+            if (expectedDebits.length > 0) {
+                errors.push("Il manque une ou plusieurs écritures correctes au débit.");
+            }
+            if (expectedCredits.length > 0) {
+                errors.push("Il manque une ou plusieurs écritures correctes au crédit.");
+            }
+            
+            // Check if any user row was marked incorrect
+            const hasIncorrectRow = userRows.some(ur => !ur.matched);
+            if (hasIncorrectRow) {
+                errors.push("Certaines lignes du journal sont incorrectes ou incomplètes.");
+            }
+            
+            // Show Feedback banner
+            validationFeedback.classList.remove('hidden');
+            if (errors.length === 0) {
+                validationFeedback.className = "rounded-2xl p-5 bg-emerald-50 border border-emerald-200 text-emerald-800 font-medium text-sm flex items-start gap-3 fade-in";
+                validationFeedback.innerHTML = `
+                    <div class="p-1 bg-emerald-500 text-white rounded-lg">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-emerald-900 mb-0.5">Écriture correcte !</h4>
+                        <p class="text-xs">Félicitations! Toutes les écritures de journal correspondent à l'opération comptable.</p>
+                    </div>
+                `;
+                // Show solution box automatically on correct answer
+                solutionBox.classList.remove('hidden');
+            } else {
+                validationFeedback.className = "rounded-2xl p-5 bg-red-50 border border-red-200 text-red-800 font-medium text-sm flex items-start gap-3 fade-in";
+                
+                let errorListHtml = errors.map(err => `<li>• ${err}</li>`).join('');
+                
+                validationFeedback.innerHTML = `
+                    <div class="p-1 bg-red-500 text-white rounded-lg">
+                        <i data-lucide="x-circle" class="w-4 h-4"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <h4 class="font-bold text-red-900 mb-1">Écriture incorrecte</h4>
+                        <ul class="text-xs space-y-1 font-normal">
+                            ${errorListHtml}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            lucide.createIcons();
+        }
+
+        // Mobile responsive tab switcher
+        function switchMobileTab(tab) {
+            mobileActiveTab = tab;
+            const listBtn = document.getElementById('tab-list-btn');
+            const detailBtn = document.getElementById('tab-detail-btn');
+            
+            if (tab === 'list') {
+                leftColumn.classList.remove('hidden');
+                rightColumn.classList.add('hidden');
+                
+                listBtn.className = "w-1/2 py-3 text-center border-b-2 border-blue-600 font-bold text-sm text-blue-600 transition-all";
+                detailBtn.className = "w-1/2 py-3 text-center border-b-2 border-transparent font-medium text-sm text-slate-500 hover:text-slate-800 transition-all";
+                document.getElementById('nav-mode-indicator').innerText = "Liste des Comptes";
+            } else {
+                leftColumn.classList.add('hidden');
+                rightColumn.classList.remove('hidden');
+                rightColumn.classList.add('flex');
+                
+                detailBtn.className = "w-1/2 py-3 text-center border-b-2 border-blue-600 font-bold text-sm text-blue-600 transition-all";
+                listBtn.className = "w-1/2 py-3 text-center border-b-2 border-transparent font-medium text-sm text-slate-500 hover:text-slate-800 transition-all";
+                document.getElementById('nav-mode-indicator').innerText = "Détails & Pratique";
+            }
+            
+            lucide.createIcons();
+        }
+    </script>
+</body>
+
+</html>

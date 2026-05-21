@@ -281,7 +281,7 @@
     <!-- Header / Navbar -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
+            <div onclick="showMainMenu()" class="flex items-center space-x-3 cursor-pointer hover:opacity-85 transition-opacity" title="Retour au menu principal">
                 <div class="bg-blue-600 text-white p-2 rounded-xl shadow-md shadow-blue-100 flex items-center justify-center">
                     <i data-lucide="graduation-cap" class="w-6 h-6"></i>
                 </div>
@@ -370,6 +370,30 @@
                     <span>Rejoindre</span>
                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
+            </div>
+
+            <!-- Resume Quiz Banner -->
+            <div id="resume-banner" class="hidden mb-6 p-4 bg-blue-50 border border-blue-200 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all hover:bg-blue-100/50">
+                <div class="flex items-start space-x-3.5">
+                    <div class="p-2.5 bg-blue-600 text-white rounded-xl flex items-center justify-center shadow-md shadow-blue-200/50 mt-0.5 sm:mt-0">
+                        <i data-lucide="play-circle" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-slate-800 block text-sm sm:text-base">Reprendre votre progression</span>
+                        <span id="resume-details" class="text-xs sm:text-sm text-slate-500 block mt-0.5">Chargement du dernier QCM...</span>
+                    </div>
+                </div>
+                <div class="flex gap-2 w-full sm:w-auto shrink-0">
+                    <button onclick="discardSavedQuiz()"
+                        class="w-1/2 sm:w-auto bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 px-4 rounded-xl text-sm flex items-center justify-center transition-all hover:scale-[1.02] active:scale-[0.98]">
+                        Annuler
+                    </button>
+                    <button onclick="resumeSavedQuiz()"
+                        class="w-1/2 sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-5 rounded-xl text-sm flex items-center justify-center space-x-2 shadow-md shadow-blue-200 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                        <span>Reprendre</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
             </div>
 
             <!-- Sélection du Mode de Test -->
@@ -735,6 +759,216 @@
         const navScoreDisplay = document.getElementById('nav-score-display');
         const restartBtnNav = document.getElementById('restart-btn-nav');
 
+        const QCM_SAVE_KEY_PREFIX = 'platform_qcm_save_v2_';
+        const QCM_LAST_ACTIVE_KEY = 'platform_qcm_last_active_mode';
+        let bannerLastActiveMode = null;
+
+        function saveQuizState() {
+            try {
+                if (!currentMode || currentQuestions.length === 0) {
+                    return;
+                }
+                const state = {
+                    currentMode,
+                    currentQuestionIndex,
+                    selectedOptionIndices,
+                    score,
+                    hasValidated,
+                    questionResults
+                };
+                localStorage.setItem(QCM_SAVE_KEY_PREFIX + currentMode, JSON.stringify(state));
+                localStorage.setItem(QCM_LAST_ACTIVE_KEY, currentMode);
+            } catch (e) {
+                console.error("Erreur lors de la sauvegarde du QCM :", e);
+            }
+        }
+
+        function loadQuizState() {
+            try {
+                // 1. Clear all card badges
+                const modes = ['marches', 'hcp', 'charges', 'all'];
+                modes.forEach(m => {
+                    const badge = document.getElementById(`badge-quiz-${m}`);
+                    if (badge) {
+                        badge.innerHTML = '';
+                        badge.className = '';
+                    }
+                });
+
+                if (typeof CONCOURS_DATA !== 'undefined') {
+                    CONCOURS_DATA.forEach((_, idx) => {
+                        const badge = document.getElementById(`badge-quiz-concours_${idx}`);
+                        if (badge) {
+                            badge.innerHTML = '';
+                            badge.className = '';
+                        }
+                    });
+                }
+
+                // Helper to get questions list for a mode
+                function getQuestionsForMode(m) {
+                    if (m === 'marches') {
+                        return typeof MP_QUESTIONS !== 'undefined' ? MP_QUESTIONS : [];
+                    } else if (m === 'hcp') {
+                        return typeof HCP_QUESTIONS !== 'undefined' ? HCP_QUESTIONS : [];
+                    } else if (m === 'charges') {
+                        return typeof CHARGES_QUESTIONS !== 'undefined' ? CHARGES_QUESTIONS : [];
+                    } else if (m === 'all') {
+                        return typeof ALL_QUESTIONS !== 'undefined' ? ALL_QUESTIONS : [];
+                    } else if (m.startsWith('concours_')) {
+                        const idx = parseInt(m.split('_')[1]);
+                        if (typeof CONCOURS_DATA !== 'undefined' && CONCOURS_DATA[idx]) {
+                            return CONCOURS_DATA[idx].questions;
+                        }
+                    }
+                    return [];
+                }
+
+                // 2. Loop over modes, show badges, and determine last active
+                const allModesToCheck = [...modes];
+                if (typeof CONCOURS_DATA !== 'undefined') {
+                    CONCOURS_DATA.forEach((_, idx) => {
+                        allModesToCheck.push(`concours_${idx}`);
+                    });
+                }
+
+                let lastActiveMode = localStorage.getItem(QCM_LAST_ACTIVE_KEY);
+                let bannerModeToUse = null;
+
+                allModesToCheck.forEach(m => {
+                    const raw = localStorage.getItem(QCM_SAVE_KEY_PREFIX + m);
+                    if (raw) {
+                        const savedState = JSON.parse(raw);
+                        const testQuestions = getQuestionsForMode(m);
+                        if (savedState && testQuestions.length > 0 && savedState.questionResults && savedState.questionResults.length === testQuestions.length) {
+                            // Add badge on the card
+                            const badge = document.getElementById(`badge-quiz-${m}`);
+                            if (badge) {
+                                let colorClass = "blue";
+                                if (m === 'marches') colorClass = "amber";
+                                else if (m === 'hcp') colorClass = "emerald";
+                                else if (m === 'charges') colorClass = "violet";
+                                else if (m.startsWith('concours_')) colorClass = "indigo";
+
+                                badge.className = `inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-${colorClass}-100 text-${colorClass}-700 border border-${colorClass}-200`;
+                                badge.innerText = `En cours (Q${savedState.currentQuestionIndex + 1}/${testQuestions.length})`;
+                            }
+
+                            // Determine which progress to display in the main top banner
+                            if (m === lastActiveMode) {
+                                bannerModeToUse = m;
+                            } else if (!bannerModeToUse) {
+                                bannerModeToUse = m;
+                            }
+                        } else {
+                            localStorage.removeItem(QCM_SAVE_KEY_PREFIX + m);
+                        }
+                    }
+                });
+
+                // 3. Render general welcome banner for bannerModeToUse
+                const banner = document.getElementById('resume-banner');
+                if (bannerModeToUse) {
+                    const savedState = JSON.parse(localStorage.getItem(QCM_SAVE_KEY_PREFIX + bannerModeToUse));
+                    const testQuestions = getQuestionsForMode(bannerModeToUse);
+                    const details = document.getElementById('resume-details');
+                    
+                    if (savedState && testQuestions.length > 0 && details && banner) {
+                        let modeLabel = "";
+                        if (bannerModeToUse === 'marches') modeLabel = "QCM Marchés Publics 2026";
+                        else if (bannerModeToUse === 'hcp') modeLabel = "QCM HCP Techniciens 3ème Grade";
+                        else if (bannerModeToUse === 'charges') modeLabel = "Traitement fiscal des charges";
+                        else if (bannerModeToUse === 'all') modeLabel = "QCM Comptabilité, Gestion & Stratégie";
+                        else if (bannerModeToUse.startsWith('concours_')) {
+                            const idx = parseInt(bannerModeToUse.split('_')[1]);
+                            if (typeof CONCOURS_DATA !== 'undefined' && CONCOURS_DATA[idx]) {
+                                modeLabel = CONCOURS_DATA[idx].name;
+                            }
+                        }
+                        const answeredCount = savedState.questionResults.filter(r => r !== null).length;
+                        details.innerText = `${modeLabel} (Question ${savedState.currentQuestionIndex + 1}/${testQuestions.length}, ${answeredCount} répondue(s))`;
+                        
+                        bannerLastActiveMode = bannerModeToUse;
+                        banner.classList.remove('hidden');
+                    }
+                } else {
+                    if (banner) banner.classList.add('hidden');
+                }
+            } catch (e) {
+                console.error("Erreur lors du chargement du QCM :", e);
+            }
+        }
+
+        function resumeSavedQuiz(mode) {
+            try {
+                const targetMode = mode || bannerLastActiveMode;
+                if (!targetMode) return;
+                const raw = localStorage.getItem(QCM_SAVE_KEY_PREFIX + targetMode);
+                if (!raw) return;
+                const savedState = JSON.parse(raw);
+                if (savedState && savedState.currentMode) {
+                    let testQuestions = [];
+                    const m = savedState.currentMode;
+                    if (m === 'marches') {
+                        if (typeof MP_QUESTIONS !== 'undefined') testQuestions = [...MP_QUESTIONS];
+                    } else if (m === 'hcp') {
+                        if (typeof HCP_QUESTIONS !== 'undefined') testQuestions = [...HCP_QUESTIONS];
+                    } else if (m === 'charges') {
+                        if (typeof CHARGES_QUESTIONS !== 'undefined') testQuestions = [...CHARGES_QUESTIONS];
+                    } else if (m.startsWith('concours_')) {
+                        const idx = parseInt(m.split('_')[1]);
+                        if (typeof CONCOURS_DATA !== 'undefined' && CONCOURS_DATA[idx]) {
+                            testQuestions = [...CONCOURS_DATA[idx].questions];
+                        }
+                    } else if (m === 'all') {
+                        if (typeof ALL_QUESTIONS !== 'undefined') testQuestions = [...ALL_QUESTIONS];
+                    }
+
+                    if (testQuestions.length > 0 && savedState.questionResults && savedState.questionResults.length === testQuestions.length) {
+                        currentMode = savedState.currentMode;
+                        currentQuestions = testQuestions;
+                        currentQuestionIndex = savedState.currentQuestionIndex;
+                        selectedOptionIndices = savedState.selectedOptionIndices || [];
+                        score = savedState.score || 0;
+                        hasValidated = savedState.hasValidated || false;
+                        questionResults = savedState.questionResults;
+
+                        welcomeScreen.classList.add('hidden');
+                        quizArea.classList.remove('hidden');
+                        restartBtnNav.classList.remove('hidden');
+
+                        if (currentMode === 'marches') {
+                            questionCategory.className = "bg-amber-50 text-amber-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider";
+                        } else if (currentMode === 'hcp') {
+                            questionCategory.className = "bg-emerald-50 text-emerald-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider";
+                        } else if (currentMode === 'charges') {
+                            questionCategory.className = "bg-violet-50 text-violet-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider";
+                        } else if (currentMode.startsWith('concours_')) {
+                            questionCategory.className = "bg-indigo-50 text-indigo-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider";
+                        } else {
+                            questionCategory.className = "bg-blue-50 text-blue-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider";
+                        }
+
+                        buildQuickDots();
+                        showQuestion();
+                        updateProgress();
+                    }
+                }
+            } catch (e) {
+                console.error("Erreur lors de la reprise du QCM :", e);
+            }
+        }
+
+        function discardSavedQuiz(mode) {
+            const targetMode = mode || bannerLastActiveMode;
+            if (!targetMode) return;
+            localStorage.removeItem(QCM_SAVE_KEY_PREFIX + targetMode);
+            if (localStorage.getItem(QCM_LAST_ACTIVE_KEY) === targetMode) {
+                localStorage.removeItem(QCM_LAST_ACTIVE_KEY);
+            }
+            loadQuizState();
+        }
+
         function getThemeClasses() {
             if (currentMode === 'marches') {
                 return {
@@ -837,9 +1071,22 @@
         window.addEventListener('DOMContentLoaded', () => {
             initAnnales();
             lucide.createIcons();
+            loadQuizState();
         });
 
-        function startQuiz(mode) {
+        function startQuiz(mode, forceNew = false) {
+            if (!forceNew) {
+                try {
+                    const raw = localStorage.getItem(QCM_SAVE_KEY_PREFIX + mode);
+                    if (raw) {
+                        resumeSavedQuiz(mode);
+                        return;
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+
             currentMode = mode;
             welcomeScreen.classList.add('hidden');
             quizArea.classList.remove('hidden');
@@ -876,6 +1123,7 @@
             buildQuickDots();
             showQuestion();
             updateProgress();
+            saveQuizState();
         }
 
         function buildQuickDots() {
@@ -900,6 +1148,7 @@
             selectedOptionIndices = hasValidated ? questionResults[index].selected : [];
             showQuestion();
             updateProgress();
+            saveQuizState();
         }
 
         // Custom render & handler logic for Traitement Fiscal des Charges
@@ -1099,6 +1348,7 @@
                 selectedOptionIndices = ['non_deductible'];
                 if (extraInputs) extraInputs.classList.remove('hidden');
             }
+            saveQuizState();
         }
 
         function validateChargesAnswer() {
@@ -1153,6 +1403,7 @@
 
             showChargesFeedbackBanner(isCorrect);
             updateProgress();
+            saveQuizState();
             
             // Disable Valider button, show Next question button
             const validerBtn = document.getElementById('custom-valider-btn');
@@ -1225,6 +1476,7 @@
             }
 
             showQuestion();
+            saveQuizState();
         }
 
         function skipQuestion() {
@@ -1234,6 +1486,7 @@
                 hasValidated = false;
                 showQuestion();
                 updateProgress();
+                saveQuizState();
             } else {
                 finishQuiz();
             }
@@ -1272,6 +1525,7 @@
 
             showFeedbackUI();
             updateProgress();
+            saveQuizState();
         }
 
         function showFeedbackUI() {
@@ -1341,6 +1595,7 @@
                 hasValidated = false;
                 showQuestion();
                 updateProgress();
+                saveQuizState();
             } else {
                 finishQuiz();
             }
@@ -1399,6 +1654,8 @@
             if (refaireBtn) {
                 refaireBtn.className = `px-6 py-3 ${theme.actionBtn} text-white font-bold text-sm rounded-xl transition shadow-md flex items-center justify-center space-x-2`;
             }
+
+            localStorage.removeItem(QCM_SAVE_KEY);
         }
 
         function showMainMenu() {
@@ -1417,11 +1674,13 @@
             hasValidated = false;
             questionResults = [];
             navScoreDisplay.innerText = "Score: 0/0";
+
+            loadQuizState();
         }
 
         function restartApp() {
             resultScreen.classList.add('hidden');
-            startQuiz(currentMode);
+            startQuiz(currentMode, true);
         }
 
         // Safe Custom Confirmation Dialog Instead of confirm()

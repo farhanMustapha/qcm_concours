@@ -1,4 +1,4 @@
-// File automatically generated from test_qcm.json
+﻿// File automatically generated from test_qcm.json
 const CONCOURS_DATA = [
     {
         "name": "Concours du 23 novembre 2008 pour le recrutement des techniciens de 3ème Grade",
